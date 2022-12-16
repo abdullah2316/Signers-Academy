@@ -12,17 +12,17 @@ function Login({ navigation }) {
         <Image style={styles.img} source={require("../assets/signers.jpg")} />
       </View>
       <View>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 20,
-          fontWeight: "bold",
-          textAlign: "center",
-          letterSpacing: 0.2,
-        }}>
-        Hello Again!
-      </Text>
-      <Text //forgot password
+        <Text
+          style={{
+            color: "white",
+            fontSize: 20,
+            fontWeight: "bold",
+            textAlign: "center",
+            letterSpacing: 0.2,
+          }}>
+          Hello Again!
+        </Text>
+        <Text
           style={{
             color: "#808080",
             fontWeight: "bold",
@@ -31,7 +31,7 @@ function Login({ navigation }) {
           }}>
           Sign in to continue
         </Text>
-        </View>
+      </View>
       <View style={styles.banner}>
         <TextInput
           textColor='white'
@@ -48,13 +48,13 @@ function Login({ navigation }) {
           activeOutlineColor='#FF3131'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
-        
-        
-        <Pressable style={styles.btn} onPress={() => navigation.navigate('signup')}>
+
+        <Pressable
+          style={styles.btn}
+          onPress={() => navigation.navigate("signup")}>
           <Text style={{ color: "white", letterSpacing: 0.2 }}>Log in</Text>
         </Pressable>
-       
-        
+
         <Text //forgot password
           style={{
             color: "#7393B3",
@@ -65,26 +65,43 @@ function Login({ navigation }) {
         </Text>
       </View>
 
-      <Text style={{
+      <Text
+        style={{
           color: "white",
-         
+
           fontWeight: "bold",
           textAlign: "center",
           letterSpacing: 0.2,
-        }}>or</Text>
+        }}>
+        or
+      </Text>
 
-      <View style={{alignItems:"center"}}>
-      <Pressable style={styles.btn2}>
-      <Text style={{color:"white",letterSpacing: 0.2}}>Continue as guest</Text>
-      </Pressable>
+      <View style={{ alignItems: "center" }}>
+        <Pressable
+          style={styles.btn2}
+          onPress={() => navigation.navigate("menu")}>
+          <Text style={{ color: "white", letterSpacing: 0.2 }}>
+            Continue as guest
+          </Text>
+        </Pressable>
       </View>
 
-        <View style={{borderBottomColor: 'grey',
-         borderBottomWidth: StyleSheet.hairlineWidth,}}/>
-     <View style={{flexDirection: 'row',justifyContent:"center",}}>
-    <Text style={{color:"white",fontSize: 12}}>Don't have an account? </Text>
-    <Text style={{color:"#7393B3",fontWeight: "bold",fontSize: 12}} onPress={() => navigation.navigate('signup')}>Sign up</Text>
-    </View>
+      <View
+        style={{
+          borderBottomColor: "grey",
+          borderBottomWidth: StyleSheet.hairlineWidth,
+        }}
+      />
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <Text style={{ color: "white", fontSize: 12 }}>
+          Don't have an account?{" "}
+        </Text>
+        <Text
+          style={{ color: "#7393B3", fontWeight: "bold", fontSize: 12 }}
+          onPress={() => navigation.navigate("signup")}>
+          Sign up
+        </Text>
+      </View>
     </View>
   );
 }
@@ -127,8 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
   btn2: {
-  
-  backgroundColor: "#B2BEB5",
+    backgroundColor: "#B2BEB5",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
@@ -136,6 +152,5 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     marginBottom: "5%",
   },
-  
 });
 export default Login;
