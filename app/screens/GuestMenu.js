@@ -8,33 +8,21 @@ function Menu({navigation}) {
       </View>
        <View style={{ alignItems: "center" }}>
         <Text style={styles.ttext}>Signers</Text>
-        <Text style={styles.ttext}>Academy</Text>
+        <Text style={styles.ttext}>Academy {'\n'}{'\n'}</Text>
+        
       </View>
       <Pressable
           style={styles.btn}
           onPress={() => navigation.navigate("signup")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Capture</Text>
         </Pressable>
+        <Text style={{ color: "black", letterSpacing: 0.2 }}>{'\n'}</Text>
         <Pressable
           style={styles.btn}
           onPress={() => navigation.navigate("signup")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
-        <Pressable
-          style={styles.btn}
-         >
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Favorites</Text>
-        </Pressable>
-        <Pressable
-          style={styles.btn}
-         >
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Recents</Text>
-        </Pressable>
-        <Pressable
-          style={styles.btn}
-         >
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Suggested</Text>
-        </Pressable>
+       
     </View>
   )
 }
@@ -42,7 +30,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: "column",
-      justifyContent: "space-between",
+     
       backgroundColor: "black",
       paddingBottom: "10%",
       paddingTop: "15%",

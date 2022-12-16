@@ -4,13 +4,14 @@ import { TextInput } from "react-native-paper";
 function Login({ navigation }) {
   return (
     <View style={styles.container}>
+      <View style={styles.banner}>
+        <Image style={styles.img} source={require("../assets/signers.jpg")} />
+      </View>
       <View style={{ alignItems: "flex-end" }}>
         <Text style={styles.ttext}>Signers</Text>
         <Text style={styles.ttext}>Academy</Text>
       </View>
-      <View style={styles.banner}>
-        <Image style={styles.img} source={require("../assets/signers.jpg")} />
-      </View>
+      
       <View>
         <Text
           style={{
@@ -51,7 +52,7 @@ function Login({ navigation }) {
 
         <Pressable
           style={styles.btn}
-          onPress={() => navigation.navigate("signup")}>
+          onPress={() => navigation.navigate("menu")}>
           <Text style={{ color: "white", letterSpacing: 0.2 }}>Log in</Text>
         </Pressable>
 
@@ -79,7 +80,7 @@ function Login({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <Pressable
           style={styles.btn2}
-          onPress={() => navigation.navigate("menu")}>
+          onPress={() => navigation.navigate("guestmenu")}>
           <Text style={{ color: "white", letterSpacing: 0.2 }}>
             Continue as guest
           </Text>
