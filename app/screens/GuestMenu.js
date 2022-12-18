@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-function Menu({navigation}) {
+function GuestMenu({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
     },
     
   });
-export default Menu
+export default GuestMenu

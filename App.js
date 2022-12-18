@@ -12,6 +12,7 @@ import Signup from "./app/screens/Signup.js";
 import Login from "./app/screens/Login.js";
 import Menu from "./app/screens/Menu.js";
 import GuestMenu from "./app/screens/GuestMenu.js";
+import Favorites from "./app/screens/Favorites.js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name='signup' component={Signup} />
           <Stack.Screen name='menu' component={Menu} />
           <Stack.Screen name='guestmenu' component={GuestMenu} />
+          <Stack.Screen name='favorites' component={Favorites} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
