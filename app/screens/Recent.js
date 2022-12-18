@@ -2,72 +2,41 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { Icon } from 'react-native-elements'
 
-function Favorites({navigation}) {
-  const [color1, setColor1] = useState("red");
-  const [color2, setColor2] = useState("red");
-  const [color3, setColor3] = useState("red");
-  const [bg1, setBg1] = useState("white");
-  const [bg2, setBg2] = useState("white");
-  const [bg3, setBg3] = useState("white");
- 
 
-
-  function handlePress1() {
-   setColor1("black");
-   setBg1("black");
-  }
-  function handlePress2() {
-    setColor2("black");
-   setBg2("black");
-   }
-   function handlePress3() {
-    setColor3("black");
-   setBg3("black");
-   }
+function Recent({navigation}) {
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "flex-start" }}>
-      <Pressable onPress={() => navigation.navigate("menu")}>
-            <Icon style={styles.icon} name='arrow-left' color = "white" size={50} type='material'/>
-            </Pressable>
-            </View>
+        <View style={{ alignItems: "flex-start" }}>
+         <Pressable onPress={() => navigation.navigate("menu")}>
+            <Icon  name='arrow-left' color = "white" size={50} type='material'/>
+         </Pressable>
+        </View>
       <View style={styles.banner}>
-
-        <Text style={styles.ttext}>Favorites {' '}
-        <Icon name='favorite' color = "red" size={30} type='material'/>
+        <Text style={styles.ttext}>Recents {' '}
+        <Icon name='schedule' color = "white" size={30} type='material'/>
         {'\n\n'}</Text>
       </View>
       <View style={styles.banner}>
       <Pressable
           style={styles.btn}
-          backgroundColor = {bg1}
+          
           onPress={() => navigation.navigate("signup")}>
-          <Text style={{ color: "black", letterSpacing: 0.2,fontSize: 20 }}>Lamp {'\t\t'}
-          <Pressable onPress={handlePress1}>
-            <Icon style={styles.icon} name='favorite' color = {color1} size={30} type='material'/>
-            </Pressable>
+          <Text style={{ color: "black", letterSpacing: 0.2,fontSize: 20 }}>Lamp 
           </Text>
         </Pressable>
         <Text style={{ color: "black", letterSpacing: 0.2 }}>{'\n'}</Text>
         <Pressable
           style={styles.btn}
-          backgroundColor = {bg2}
           onPress={() => navigation.navigate("signup")}>
-          <Text style={{ color: "black", letterSpacing: 0.2, fontSize: 20 }}>Pillow Case {'\t\t'}
-          <Pressable onPress={handlePress2}>
-            <Icon style={styles.icon} name='favorite' color = {color2} size={30} type='material'/>
-            </Pressable>
+          <Text style={{ color: "black", letterSpacing: 0.2, fontSize: 20 }}>Pillow Case 
+          
           </Text>
         </Pressable>
         <Text style={{ color: "black", letterSpacing: 0.2 }}>{'\n'}</Text>
         <Pressable
           style={styles.btn}
-          backgroundColor = {bg3}
           onPress={() => navigation.navigate("signup")}>
-          <Text style={{ color: "black", letterSpacing: 0.2, fontSize: 20 }}>Door {'\t\t'}
-          <Pressable onPress={handlePress3}>
-            <Icon style={styles.icon} name='favorite' color = {color3} size={30} type='material'/>
-            </Pressable>
+          <Text style={{ color: "black", letterSpacing: 0.2, fontSize: 20 }}>Door
           </Text>
         </Pressable>
         <Text style={{ color: "black", letterSpacing: 0.2 }}>{'\n'}</Text>
@@ -97,6 +66,9 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       alignItems: "center",
     },
+    iconn: {
+        alignItems: "start",
+      },
     img: {
       width: 300,
       height: 150,
@@ -108,13 +80,15 @@ const styles = StyleSheet.create({
       marginBottom: "5%",
     },
     btn: {
-      
+      backgroundColor:"white",
       width: "70%",
       alignItems: "center",
       paddingTop: "2%",
       paddingBottom: "2%",
       borderRadius: 2,
       marginBottom: "5%",
+      flexDirection: "column",
+      alignItems: "center",
     },
     btn2: {
     
@@ -128,4 +102,4 @@ const styles = StyleSheet.create({
     },
     
   });
-export default Favorites
+export default Recent

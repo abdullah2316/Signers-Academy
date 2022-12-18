@@ -21,13 +21,15 @@ function Menu({navigation}) {
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
         <Pressable
+        onPress={() => navigation.navigate("favorites")}
           style={styles.btn}
          >
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Favorites</Text>
         </Pressable>
         <Pressable
           style={styles.btn}
-         >
+          onPress={() => navigation.navigate("recent")}>
+         
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Recents</Text>
         </Pressable>
         <Pressable

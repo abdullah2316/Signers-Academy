@@ -80,7 +80,7 @@ function Login({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <Pressable
           style={styles.btn2}
-          onPress={() => navigation.navigate("favorites")}>
+          onPress={() => navigation.navigate("guestmenu")}>
           <Text style={{ color: "white", letterSpacing: 0.2 }}>
             Continue as guest
           </Text>
