@@ -14,6 +14,10 @@ import Menu from "./app/screens/Menu.js";
 import GuestMenu from "./app/screens/GuestMenu.js";
 import Favorites from "./app/screens/Favorites.js";
 import Recent from "./app/screens/Recent.js";
+import PSLPlayer from "./app/screens/PslPlayer.js";
+import Capture from "./app/screens/Capture.js";
+import Display from "./app/screens/DisplayImg.js";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 export default function App() {
@@ -32,7 +36,9 @@ export default function App() {
           <Stack.Screen name='guestmenu' component={GuestMenu} />
           <Stack.Screen name='favorites' component={Favorites} />
           <Stack.Screen name='recent' component={Recent} />
-
+          <Stack.Screen name='capture' component={Capture} />
+          <Stack.Screen name='display' component={Display} />
+          <Stack.Screen name='player' component={PSLPlayer} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
