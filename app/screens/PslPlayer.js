@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { Icon } from "react-native-elements";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
-function PSLPlayer({ navigation,route }) {
+function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [iconName, setIconName] = useState("play-circle-filled");
@@ -13,8 +13,8 @@ function PSLPlayer({ navigation,route }) {
     // Update the document title using the browser API
     replay ? setColreplay("#24a0ed") : setColreplay("white");
   });
-  var src = route.params.src;
- console.log(src);
+  var pth = route.params.path;
+  console.log(pth);
   return (
     <LinearGradient
       style={styles.container}
@@ -39,13 +39,13 @@ function PSLPlayer({ navigation,route }) {
       <Video
         ref={video}
         style={styles.video}
-        source={{uri:src}}
+        source={pth}
         useNativeControls={false}
         resizeMode='contain'
         // isLooping
         onPlaybackStatusUpdate={(status) => {
           setStatus(() => status);
-         // console.log(replay);
+          // console.log(replay);
           if (status.didJustFinish) {
             replay
               ? video.current.replayAsync()
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   video: {
     alignSelf: "center",
-    width: "70%",
+    width: "100%",
     height: "70%",
   },
   buttons: {

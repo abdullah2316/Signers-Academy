@@ -38,7 +38,7 @@ function Favorites({ navigation }) {
               />
               <Pressable 
                 style={styles.btn}
-                onPress={() => {navigation.navigate("player", {src: item.path})}}>
+                onPress={() => {navigation.navigate("player", {path: item.path})}}>
                 <Text
                   style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
                   {item.name}

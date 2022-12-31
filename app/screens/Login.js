@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { TextInput } from "react-native-paper";
 function Login({ navigation }) {
+  const [res, setresult] = useState([]);
+  // useEffect(() => {
+  //   async function getUsres() {
+  //     try {
+  //       console.log("hi");
+  //       const users = await axios.get("http://192.168.1.7:8000/api/v1/Users/");
+  //       console.log(users.data);
+  //       console.log("hi");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   getUsres();
+  // }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
@@ -11,7 +28,7 @@ function Login({ navigation }) {
         <Text style={styles.ttext}>Signers</Text>
         <Text style={styles.ttext}>Academy</Text>
       </View>
-      
+
       <View>
         <Text
           style={{
