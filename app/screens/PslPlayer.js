@@ -41,7 +41,7 @@ function PSLPlayer({ navigation, route }) {
         style={styles.video}
         source={pth}
         useNativeControls={false}
-        resizeMode='contain'
+        resizeMode='stretch'
         // isLooping
         onPlaybackStatusUpdate={(status) => {
           setStatus(() => status);
