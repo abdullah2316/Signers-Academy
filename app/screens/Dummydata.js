@@ -1,64 +1,23 @@
 export const items_list = [
   {
     name: "lamp",
-    path: "",
+    path: "require('../assets/lamp.mp4')",
     status: "",
+    key:1,
   },
   {
     name: "Pillow case",
-    path: "",
+    path: "require('../assets/Pillow case.mp4')",
     status: "",
+    key:2,
   },
   {
     name: "Door",
-    path: "",
+    path: "require('../assets/Door.mp4')",
     status: "",
+    key:3,
   },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-  },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-  },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-  },
+  
 ];
 export const recents_list = [
   {
@@ -66,71 +25,21 @@ export const recents_list = [
     path: "",
     status: "",
     liked: true,
+    key:1,
   },
   {
     name: "Pillow case",
     path: "",
     status: "",
     liked: true,
+    key:2,
   },
   {
     name: "Door",
     path: "",
     status: "",
     liked: false,
+    key:3,
   },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-    liked: true,
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-    liked: true,
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "lamp",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "Pillow case",
-    path: "",
-    status: "",
-    liked: false,
-  },
-  {
-    name: "Door",
-    path: "",
-    status: "",
-    liked: false,
-  },
+  
 ];

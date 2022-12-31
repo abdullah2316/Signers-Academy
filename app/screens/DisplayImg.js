@@ -17,7 +17,7 @@ function DisplayImg({ route, navigation }) {
     <View style={styles.container}>
       <ImageBackground source={{ uri: route.params.path }} style={{ flex: 1 }}>
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={() => {navigation.navigate("player")}}>
+          <Pressable style={styles.button} onPress={() => {navigation.navigate("player", {src:"require('../assets/lamp.mp4')"})}}>
             <Icon
               style={styles.icon}
               name='done'

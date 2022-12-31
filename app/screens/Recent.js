@@ -36,7 +36,7 @@ function Recents({ navigation }) {
         {items &&
           items.map((item, i) => (
             <>
-              <View
+              <View 
                 style={{
                   borderBottomColor: "grey",
                   borderBottomWidth: StyleSheet.hairlineWidth,

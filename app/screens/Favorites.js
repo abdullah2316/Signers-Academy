@@ -7,7 +7,7 @@ function Favorites({ navigation }) {
   function handlePress(i, e) {
     setItems(items.filter((_, ind) => i !== ind));
   }
-
+  var source;
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "flex-start" }}>
@@ -25,19 +25,20 @@ function Favorites({ navigation }) {
         <Text style={styles.ttext} textCenter>Favorites</Text>
       </View>
       <View style={styles.banner}>
-      <ScrollView>
+      <ScrollView >
         {items &&
           items.map((item, i) => (
             <>
-              <View
+           
+              <View  
                 style={{
                   borderBottomColor: "grey",
                   borderBottomWidth: StyleSheet.hairlineWidth,
                 }}
               />
-              <Pressable
+              <Pressable 
                 style={styles.btn}
-                onPress={() => navigation.navigate("signup")}>
+                onPress={() => {navigation.navigate("player", {src: item.path})}}>
                 <Text
                   style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
                   {item.name}
