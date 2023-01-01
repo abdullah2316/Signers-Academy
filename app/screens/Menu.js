@@ -1,6 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 function Menu({ navigation }) {
+  React.useEffect(
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        e.preventDefault();
+      }),
+    [ navigation]
+  );
   return (
     <View style={styles.container}>
       <View style={styles.banner}>

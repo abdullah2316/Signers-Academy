@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "@react-navigation/native-stack";
 import {
   StyleSheet,
@@ -8,91 +8,136 @@ import {
   Pressable,
   KeyboardAvoidingView,
   StatusBar,
+  Alert,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 function Signup({ navigation }) {
-  const vh = StatusBar.currentHeight;
-  console.log(StatusBar.currentHeight);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [contact, setContact] = useState("");
+  function Usersignup() {
+    if (!name.trim() || !email.trim() || !password.trim() || !contact.trim()) {
+      Alert.alert("Empty field", "All fields are required!", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+
+      return;
+    }
+    fetch("http://192.168.1.11:8000/api/v1/Users/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        contactNumber: contact,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        Alert.alert("Account created successfully", "Login to continue", [
+          { text: "OK", onPress: () => {
+            setName("");
+            setEmail("");
+            setPassword("");
+            setContact("");
+            navigation.navigate("login");
+          } },
+        ]);
+      })
+      .catch((error) => console.log("Error", error));
+  }
   return (
-   
-      <View style={styles.container}>
-        <View style={{ alignItems: "flex-end" }}>
-          <Text style={styles.ttext}>Signers</Text>
-          <Text style={styles.ttext}>Academy</Text>
-        </View>
-
-        <View style={styles.banner}>
-          <Image style={styles.img} source={require("../assets/signers.jpg")} />
-        </View>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 20,
-            fontWeight: "bold",
-            textAlign: "center",
-            letterSpacing: 0.2,
-          }}>
-          Sign Up For Free
-        </Text>
-        {/* <Text style={{color:"#FF3131"}}>Welcome to signers academy</Text> */}
-
-        <View style={styles.banner}>
-          <TextInput
-            textColor='white'
-            mode='outlined'
-            label='Username'
-            activeOutlineColor='#FF3131'
-            outlineColor='#899499'
-            style={styles.textInput}></TextInput>
-          <TextInput
-            secureTextEntry={true}
-            textColor='white'
-            mode='outlined'
-            label='Password'
-            activeOutlineColor='#FF3131'
-            outlineColor='#899499'
-            style={styles.textInput}></TextInput>
-          <TextInput
-            textColor='white'
-            mode='outlined'
-            label='Email'
-            activeOutlineColor='#FF3131'
-            outlineColor='#899499'
-            style={styles.textInput}></TextInput>
-          <TextInput
-            textColor='white'
-            mode='outlined'
-            label='Contact'
-            activeOutlineColor='#FF3131'
-            outlineColor='#899499'
-            style={styles.textInput}></TextInput>
-        </View>
-
-        <View style={{ alignItems: "center" }}>
-          <Pressable style={styles.btn}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>Sign up</Text>
-          </Pressable>
-        </View>
-        <View
-          style={{
-            borderBottomColor: "grey",
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Text style={{ color: "white", fontSize: 12 }}>
-            Already have an account?{" "}
-          </Text>
-          <Text
-            style={{ color: "#7393B3", fontWeight: "bold", fontSize: 12 }}
-            onPress={() => {
-              navigation.navigate("login");
-            }}>
-            Login
-          </Text>
-        </View>
+    <View style={styles.container}>
+      <View style={{ alignItems: "flex-end" }}>
+        <Text style={styles.ttext}>Signers</Text>
+        <Text style={styles.ttext}>Academy</Text>
       </View>
 
+      <View style={styles.banner}>
+        <Image style={styles.img} source={require("../assets/signers.jpg")} />
+      </View>
+      <Text
+        style={{
+          color: "white",
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+          letterSpacing: 0.2,
+        }}>
+        Sign Up For Free
+      </Text>
+      {/* <Text style={{color:"#FF3131"}}>Welcome to signers academy</Text> */}
+
+      <View style={styles.banner}>
+        <TextInput
+          textColor='white'
+          mode='outlined'
+          label='Username'
+          activeOutlineColor='#FF3131'
+          outlineColor='#899499'
+          value={name}
+          onChangeText={setName}
+          style={styles.textInput}></TextInput>
+        <TextInput
+          secureTextEntry={true}
+          textColor='white'
+          mode='outlined'
+          label='Password'
+          value={password}
+          onChangeText={setPassword}
+          activeOutlineColor='#FF3131'
+          outlineColor='#899499'
+          style={styles.textInput}></TextInput>
+        <TextInput
+          textColor='white'
+          mode='outlined'
+          label='Email'
+          value={email}
+          onChangeText={setEmail}
+          activeOutlineColor='#FF3131'
+          outlineColor='#899499'
+          style={styles.textInput}></TextInput>
+        <TextInput
+          textColor='white'
+          mode='outlined'
+          label='Contact'
+          value={contact}
+          onChangeText={setContact}
+          keyboardType='numeric'
+          activeOutlineColor='#FF3131'
+          outlineColor='#899499'
+          style={styles.textInput}></TextInput>
+      </View>
+
+      <View style={{ alignItems: "center" }}>
+        <Pressable style={styles.btn} onPress={Usersignup}>
+          <Text style={{ color: "white", letterSpacing: 0.2 }}>Sign up</Text>
+        </Pressable>
+      </View>
+      <View
+        style={{
+          borderBottomColor: "grey",
+          borderBottomWidth: StyleSheet.hairlineWidth,
+        }}
+      />
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <Text style={{ color: "white", fontSize: 12 }}>
+          Already have an account?{" "}
+        </Text>
+        <Text
+          style={{ color: "#7393B3", fontWeight: "bold", fontSize: 12 }}
+          onPress={() => {
+            navigation.navigate("login");
+          }}>
+          Login
+        </Text>
+      </View>
+    </View>
   );
 }
 const styles = StyleSheet.create({

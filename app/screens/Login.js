@@ -1,23 +1,45 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
 function Login({ navigation }) {
-  const [res, setresult] = useState([]);
-  // useEffect(() => {
-  //   async function getUsres() {
-  //     try {
-  //       console.log("hi");
-  //       const users = await axios.get("http://192.168.1.7:8000/api/v1/Users/");
-  //       console.log(users.data);
-  //       console.log("hi");
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  function Userlogin() {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Empty field", "All fields are required!", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
 
-  //   getUsres();
-  // }, []);
+      return;
+    }
+    fetch(
+      "http://192.168.1.11:8000/api/v1/Users/login/?email=" +
+        email +
+        "&password=" +
+        password,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data.length)
+        if (data.length === 0) {
+          Alert.alert("Login Failed", "Invalid email or password", [
+            { text: "OK" },
+          ]);
+          return;
+        }
+        console.log(data[0].name);
+        navigation.navigate("menu", { user_id: data[0].email });
+      })
+      .catch((error) => console.log("Error", error));
+  }
 
   return (
     <View style={styles.container}>
@@ -55,6 +77,8 @@ function Login({ navigation }) {
           textColor='white'
           mode='outlined'
           label='Email'
+          value={email}
+          onChangeText={setEmail}
           activeOutlineColor='#FF3131'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
@@ -63,13 +87,14 @@ function Login({ navigation }) {
           textColor='white'
           mode='outlined'
           label='Password'
+          value={password}
+          onChangeText={setPassword}
           activeOutlineColor='#FF3131'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
 
-        <Pressable
-          style={styles.btn}
-          onPress={() => navigation.navigate("menu")}>
+        <Pressable style={styles.btn} onPress={Userlogin}>
+          {/* onPress={() => navigation.navigate("menu")}> */}
           <Text style={{ color: "white", letterSpacing: 0.2 }}>Log in</Text>
         </Pressable>
 
