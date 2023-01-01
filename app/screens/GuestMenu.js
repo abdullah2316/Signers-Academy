@@ -1,8 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { Icon } from "react-native-elements";
+
 function GuestMenu({navigation}) {
   return (
     <View style={styles.container}>
+      <View style={{ alignItems: "flex-start" }}>
+        <Pressable onPress={() => navigation.navigate("login")}>
+          <Icon
+            style={styles.icon}
+            name='keyboard-backspace'
+            color='white'
+            size={30}
+            type='material'
+          />
+        </Pressable>
+      </View>
       <View style={styles.banner}>
         <Image style={styles.img} source={require("../assets/signers.jpg")} />
       </View>
