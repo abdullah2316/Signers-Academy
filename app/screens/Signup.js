@@ -24,7 +24,7 @@ function Signup({ navigation }) {
 
       return;
     }
-    fetch("http://192.168.1.11:8000/api/v1/Users/", {
+    fetch("http://192.168.18.66:8000/api/v1/Users/", {
       method: "POST",
       headers: {
         Accept: "application/json",

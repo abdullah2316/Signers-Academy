@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
 function Login({ navigation }) {
@@ -14,7 +14,7 @@ function Login({ navigation }) {
       return;
     }
     fetch(
-      "http://192.168.1.11:8000/api/v1/Users/login/?email=" +
+      "http://192.168.18.66:8000/api/v1/Users/login/?email=" +
         email +
         "&password=" +
         password,
