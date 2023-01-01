@@ -44,7 +44,7 @@ function Recents({ navigation }) {
               />
               <Pressable
                 style={styles.btn}
-                onPress={() => navigation.navigate("signup")}>
+                onPress={() => {navigation.navigate("player", {path: item.path, name: item.name, urdu: item.urdu})}}>
                 <Text
                   style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
                   {item.name}

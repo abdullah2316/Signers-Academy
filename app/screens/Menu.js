@@ -18,7 +18,7 @@ function Menu({ navigation }) {
         </Pressable>
         <Pressable
           style={styles.btn}
-          onPress={() => navigation.navigate("capture")}>
+          onPress={() => navigation.navigate("dictionary")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
         <Pressable

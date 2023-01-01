@@ -17,6 +17,7 @@ import Recent from "./app/screens/Recent.js";
 import PSLPlayer from "./app/screens/PslPlayer.js";
 import Capture from "./app/screens/Capture.js";
 import Display from "./app/screens/DisplayImg.js";
+import Dictionary from "./app/screens/Dictionary.js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -39,6 +40,7 @@ export default function App() {
           <Stack.Screen name='capture' component={Capture} />
           <Stack.Screen name='display' component={Display} />
           <Stack.Screen name='player' component={PSLPlayer} />
+          <Stack.Screen name='dictionary' component={Dictionary} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

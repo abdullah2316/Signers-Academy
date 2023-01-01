@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView , Pressable } from "react-native";
 import { Icon } from "react-native-elements";
-import { items_list } from "./Dummydata.js";
-function Favorites({ navigation }) {
-  const [items, setItems] = useState(items_list);
+import { recents_list } from "./Dummydata.js";
+function Dictionary({ navigation }) {
+  const [items, setItems] = useState(recents_list);
   function handlePress(i, e) {
-    setItems(items.filter((_, ind) => i !== ind));
+    // setItems(items.filter((_, ind) => i !== ind));
   }
-  var source;
+
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "flex-start" }}>
@@ -21,37 +21,36 @@ function Favorites({ navigation }) {
           />
         </Pressable>
       </View>
-      <View style={{paddingBottom:"10%"}}>
-        <Text style={styles.ttext} textCenter>Favorites</Text>
+      <View style={{paddingBottom:"10%",flexDirection:"row"}}>
+        <Text style={styles.ttext} textCenter>Dictionary</Text>
+        <Icon
+            style={{marginLeft:"5%",marginTop:"12%"}}
+            name='article'
+            color='white'
+            size={30}
+            type='material'
+          />
       </View>
       <View style={styles.banner}>
-      <ScrollView >
+      <ScrollView>
         {items &&
           items.map((item, i) => (
             <>
-           
-              <View  
+              <View 
                 style={{
                   borderBottomColor: "grey",
                   borderBottomWidth: StyleSheet.hairlineWidth,
                 }}
               />
-              <Pressable 
+              <Pressable
                 style={styles.btn}
                 onPress={() => {navigation.navigate("player", {path: item.path, name: item.name, urdu: item.urdu})}}>
                 <Text
                   style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
                   {item.name}
                 </Text>
-                <Pressable onPress={(e) => handlePress(i, e)}>
-                  <Icon
-                    style={styles.icon}
-                    name='favorite'
-                    color='red'
-                    size={30}
-                    type='material'
-                  />
-                </Pressable>
+               
+                  
               </Pressable>
             </>
           ))}
@@ -117,4 +116,4 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
 });
-export default Favorites;
+export default Dictionary;

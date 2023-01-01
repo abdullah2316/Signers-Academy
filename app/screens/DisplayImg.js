@@ -12,12 +12,11 @@ import {
 } from "react-native";
 function DisplayImg({ route, navigation }) {
   const { imgURI } = route.params;
-  console.log(route.params);
   return (
     <View style={styles.container}>
       <ImageBackground source={{ uri: route.params.path }} style={{ flex: 1 }}>
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={() => {navigation.navigate("player", {src:"require('../assets/lamp.mp4')"})}}>
+          <Pressable style={styles.button} onPress={() => {navigation.navigate("player", {path:require('../assets/Door.mp4'),name: "Door", urdu: "دروازہ" })}}>
             <Icon
               style={styles.icon}
               name='done'

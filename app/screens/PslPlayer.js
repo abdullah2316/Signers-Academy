@@ -14,7 +14,8 @@ function PSLPlayer({ navigation, route }) {
     replay ? setColreplay("#24a0ed") : setColreplay("white");
   });
   var pth = route.params.path;
-  console.log(pth);
+  var name = route.params.name;
+  var urdu = route.params.urdu;
   return (
     <LinearGradient
       style={styles.container}
@@ -31,10 +32,10 @@ function PSLPlayer({ navigation, route }) {
         </Pressable>
       </View>
       <Text style={{ color: "white", textAlign: "center", fontSize: 20 }}>
-        Lamp
+        {name}
       </Text>
       <Text style={{ color: "white", textAlign: "center", fontSize: 25 }}>
-        لیمپ
+        {urdu}
       </Text>
       <Video
         ref={video}

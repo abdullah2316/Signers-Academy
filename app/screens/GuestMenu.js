@@ -13,13 +13,13 @@ function GuestMenu({navigation}) {
       </View>
       <Pressable
           style={styles.btn}
-          onPress={() => navigation.navigate("signup")}>
+          onPress={() => navigation.navigate("capture")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Capture</Text>
         </Pressable>
         <Text style={{ color: "black", letterSpacing: 0.2 }}>{'\n'}</Text>
         <Pressable
           style={styles.btn}
-          onPress={() => navigation.navigate("signup")}>
+          onPress={() => navigation.navigate("dictionary")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
        
