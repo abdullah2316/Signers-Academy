@@ -28,7 +28,7 @@ function Login({ navigation }) {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data.length)
+        console.log(data.length);
         if (data.length === 0) {
           Alert.alert("Login Failed", "Invalid email or password", [
             { text: "OK" },
@@ -36,7 +36,8 @@ function Login({ navigation }) {
           return;
         }
         console.log(data[0].name);
-        navigation.navigate("menu", { user_id: data[0].email });
+        global.user_id=data[0].email;
+        navigation.navigate("menu");
       })
       .catch((error) => console.log("Error", error));
   }
@@ -122,7 +123,7 @@ function Login({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <Pressable
           style={styles.btn2}
-          onPress={() => navigation.navigate("guestmenu")}>
+          onPress={() => navigation.navigate("menu", {})}>
           <Text style={{ color: "white", letterSpacing: 0.2 }}>
             Continue as guest
           </Text>

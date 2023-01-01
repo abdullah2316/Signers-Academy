@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { Icon } from "react-native-elements";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
+import { TabRouter } from "@react-navigation/native";
 function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -21,7 +22,10 @@ function PSLPlayer({ navigation, route }) {
       style={styles.container}
       colors={["rgba(0,0,0,0.8)", "transparent"]}>
       <View style={{ alignItems: "flex-start" }}>
-        <Pressable onPress={() => navigation.navigate("menu")}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("menu");
+          }}>
           <Icon
             style={styles.icon}
             name='keyboard-backspace'
@@ -62,9 +66,9 @@ function PSLPlayer({ navigation, route }) {
           }}>
           <Icon
             style={styles.icon}
-            name='replay'
+            name='file-download'
             color={colreplay}
-            size={30}
+            size={40}
             type='material'
           />
         </Pressable>

@@ -11,7 +11,6 @@ import {
 import Signup from "./app/screens/Signup.js";
 import Login from "./app/screens/Login.js";
 import Menu from "./app/screens/Menu.js";
-import GuestMenu from "./app/screens/GuestMenu.js";
 import Favorites from "./app/screens/Favorites.js";
 import Recent from "./app/screens/Recent.js";
 import PSLPlayer from "./app/screens/PslPlayer.js";
@@ -34,7 +33,6 @@ export default function App() {
           <Stack.Screen name='login' component={Login} />
           <Stack.Screen name='signup' component={Signup} />
           <Stack.Screen name='menu' component={Menu} />
-          <Stack.Screen name='guestmenu' component={GuestMenu} />
           <Stack.Screen name='favorites' component={Favorites} />
           <Stack.Screen name='recent' component={Recent} />
           <Stack.Screen name='capture' component={Capture} />

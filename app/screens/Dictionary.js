@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView , Pressable } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { Icon } from "react-native-elements";
 import { recents_list } from "./Dummydata.js";
 function Dictionary({ navigation }) {
@@ -21,40 +21,50 @@ function Dictionary({ navigation }) {
           />
         </Pressable>
       </View>
-      <View style={{paddingBottom:"10%",flexDirection:"row"}}>
-        <Text style={styles.ttext} textCenter>Dictionary</Text>
+      <View style={{ paddingBottom: "10%", flexDirection: "row" }}>
+        <Text style={styles.ttext} textCenter>
+          Dictionary
+        </Text>
         <Icon
-            style={{marginLeft:"5%",marginTop:"12%"}}
-            name='article'
-            color='white'
-            size={30}
-            type='material'
-          />
+          style={{ marginLeft: "5%", marginTop: "12%" }}
+          name='article'
+          color='white'
+          size={30}
+          type='material'
+        />
       </View>
       <View style={styles.banner}>
-      <ScrollView>
-        {items &&
-          items.map((item, i) => (
-            <>
-              <View 
-                style={{
-                  borderBottomColor: "grey",
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                }}
-              />
-              <Pressable
-                style={styles.btn}
-                onPress={() => {navigation.navigate("player", {path: item.path, name: item.name, urdu: item.urdu})}}>
-                <Text
-                  style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
-                  {item.name}
-                </Text>
-               
-                  
-              </Pressable>
-            </>
-          ))}
-</ScrollView>
+        <ScrollView>
+          {items &&
+            items.map((item, i) => (
+              <>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+                <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    navigation.navigate("player", {
+                      path: item.path,
+                      name: item.name,
+                      urdu: item.urdu,
+                    });
+                  }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      letterSpacing: 0.2,
+                      fontSize: 15,
+                    }}>
+                    {item.name}
+                  </Text>
+                </Pressable>
+              </>
+            ))}
+        </ScrollView>
         <View
           style={{
             borderBottomColor: "grey",

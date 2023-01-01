@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-function Menu({ navigation }) {
+function Menu({ navigation, route }) {
   React.useEffect(
     () =>
-      navigation.addListener('beforeRemove', (e) => {
+      navigation.addListener("beforeRemove", (e) => {
         e.preventDefault();
       }),
-    [ navigation]
+    [navigation]
   );
   return (
     <View style={styles.container}>
@@ -28,19 +28,29 @@ function Menu({ navigation }) {
           onPress={() => navigation.navigate("dictionary")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("favorites")}
-          style={styles.btn}>
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Favorites</Text>
-        </Pressable>
-        <Pressable
-          style={styles.btn}
-          onPress={() => navigation.navigate("recent")}>
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Recents</Text>
-        </Pressable>
-        <Pressable style={styles.btn}>
-          <Text style={{ color: "black", letterSpacing: 0.2 }}>Suggested</Text>
-        </Pressable>
+        {global.user_id && (
+          <>
+            <Pressable
+              onPress={() => navigation.navigate("favorites")}
+              style={styles.btn}>
+              <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                Favorites
+              </Text>
+            </Pressable>
+            <Pressable
+              style={styles.btn}
+              onPress={() => navigation.navigate("recent")}>
+              <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                Recents
+              </Text>
+            </Pressable>
+            <Pressable style={styles.btn}>
+              <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                Suggested
+              </Text>
+            </Pressable>
+          </>
+        )}
       </View>
     </View>
   );
