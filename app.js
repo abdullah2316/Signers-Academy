@@ -1,8 +1,17 @@
 const express = require("express");
+
+
+
+
+
+// define routes
+
+// add middlewares to app
+
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
 module.exports = app;
