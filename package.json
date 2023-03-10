@@ -1,0 +1,19 @@
+{
+  "name": "signers-academy-proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullah2316/Signers-Academy-Proto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdullah2316/Signers-Academy-Proto/issues"
+  },
+  "homepage": "https://github.com/abdullah2316/Signers-Academy-Proto#readme"
+}
