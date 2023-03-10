@@ -8,7 +8,7 @@ var app = require("../app");
 var debug = require("debug")("generator:server");
 var http = require("http");
 const mongoose = require("mongoose");
-
+const populate = require("../utils/populateDictionary");
 /**
  * Get port from environment and store in Express.
  */
@@ -50,6 +50,8 @@ mongoose.connection.on("connected", () => {
 server.listen(port, () => {
   connect();
   console.log(`MAYA is listening on port ${port}`);
+  //already added existing dictionary to DB
+  // populate();
 });
 server.on("error", onError);
 server.on("listening", onListening);

@@ -1,7 +1,11 @@
 var UserModel = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+/**
+ * userController.js
+ *
+ * @description :: Server-side logic for managing users.
+ */
 module.exports = {
   //register function
   create: async function (req, res) {

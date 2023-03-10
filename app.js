@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const populate = require("./utils/populateDictionary.js");
 dotenv.config();
 
 // define routes
