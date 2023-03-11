@@ -7,6 +7,7 @@ dotenv.config();
 // define routes
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const dictionaryRoute = require("./routes/dictionary");
 
 var app = express();
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json({ limit: "500kb" }));
 //Middlewares
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
+app.use("/dictionary", dictionaryRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

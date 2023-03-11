@@ -13,9 +13,9 @@ const populateDictionary = () => {
   // loop through data and create new Mongoose documents
   for (let i = 0; i < data.length; i++) {
     const record = new dictionaryModel({
-      name_eng: data[i].link,
-      name_urdu: data[i].nameENG,
-      video_url: data[i].nameUrdu,
+      name_eng: data[i].nameENG,
+      name_urdu: data[i].nameUrdu,
+      video_url: data[i].link,
     });
 
     record
