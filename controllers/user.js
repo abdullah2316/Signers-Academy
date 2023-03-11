@@ -3,11 +3,10 @@ var UserModel = require("../models/user");
 module.exports = {
   //register function
   getuser: async function (req, res) {
-    var user_id = req.user._id;
-    UserModel.findOne({ id: user_id })
+    const user_id = req.user.id;
+    UserModel.findOne({ _id: user_id })
       .exec()
       .then((users) => {
-        console.log(user_id);
         return res.json(users);
       })
       .catch((err) => {
