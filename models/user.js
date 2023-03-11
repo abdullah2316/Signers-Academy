@@ -21,7 +21,7 @@ var userSchema = new Schema(
       unique: true,
       default: "",
     },
-    resetLink: {
+    secret: {
       type: String,
       default: null,
     },

@@ -5,5 +5,8 @@ const auth = require("../middlewares/verifytoken");
 
 //Register user
 router.get("/getuser", auth, userController.getuser);
+router.post("/getotp", userController.getOTP);
+router.post("/verifyotp", userController.verifyOTP);
+//router.post("/setpassword", userController.setpassword);
 
 module.exports = router;
