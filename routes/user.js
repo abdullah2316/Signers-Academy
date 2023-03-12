@@ -7,6 +7,7 @@ const auth = require("../middlewares/verifytoken");
 router.get("/getuser", auth, userController.getuser);
 router.post("/getotp", userController.getOTP);
 router.post("/verifyotp", userController.verifyOTP);
-//router.post("/setpassword", userController.setpassword);
+router.post("/setpassword", userController.setpassword);
+router.post("/resetpassword", auth, userController.resetpassword);
 
 module.exports = router;

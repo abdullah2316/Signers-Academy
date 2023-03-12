@@ -1,28 +1,36 @@
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "SignersAcademy@gmail.com",
-    pass: "tfzuloscfeiqquyr",
-  },
-});
+const http = require("http");
 
 function sendPasswordResetEmail(email, OTP) {
-  const mailOptions = {
-    from: "SignersAcademy@gmail.com",
-    to: email,
-    subject: "Password Reset",
-    html: `<p>Your OTP is : ${OTP}</p>`,
+  const data = {
+    email: email,
+    otp: OTP,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
+  const options = {
+    hostname: "127.0.0.1",
+    port: 5001,
+    path: "/sendmail",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(JSON.stringify(data)),
+    },
+  };
+
+  const req = http.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+
+    res.on("data", (d) => {
+      process.stdout.write(d);
+    });
   });
+
+  req.on("error", (error) => {
+    console.error(error);
+  });
+
+  req.write(JSON.stringify(data));
+  req.end();
 }
 
 module.exports = sendPasswordResetEmail;

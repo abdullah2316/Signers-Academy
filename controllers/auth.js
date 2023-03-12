@@ -35,7 +35,6 @@ module.exports = {
 
   login: async (req, res) => {
     try {
-      console.log(req.body);
       const email = req.body.email;
 
       const user = await UserModel.findOne({ email: email });
