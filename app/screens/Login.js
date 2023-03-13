@@ -14,7 +14,7 @@ function Login({ navigation }) {
       return;
     }
     fetch(
-      "http://192.168.18.66:8000/api/v1/Users/login/?email=" +
+      "http://192.168.1.3:8000/api/v1/Users/login/?email=" +
         email +
         "&password=" +
         password,
@@ -36,7 +36,7 @@ function Login({ navigation }) {
           return;
         }
         console.log(data[0].name);
-        global.user_id=data[0].email;
+        global.user_id = data[0].email;
         navigation.navigate("menu");
       })
       .catch((error) => console.log("Error", error));

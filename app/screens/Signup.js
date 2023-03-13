@@ -24,7 +24,7 @@ function Signup({ navigation }) {
 
       return;
     }
-    fetch("http://192.168.18.66:8000/api/v1/Users/", {
+    fetch("http://192.168.0.105:8000/api/v1/Users/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -40,13 +40,16 @@ function Signup({ navigation }) {
       .then((resp) => resp.json())
       .then((data) => {
         Alert.alert("Account created successfully", "Login to continue", [
-          { text: "OK", onPress: () => {
-            setName("");
-            setEmail("");
-            setPassword("");
-            setContact("");
-            navigation.navigate("login");
-          } },
+          {
+            text: "OK",
+            onPress: () => {
+              setName("");
+              setEmail("");
+              setPassword("");
+              setContact("");
+              navigation.navigate("login");
+            },
+          },
         ]);
       })
       .catch((error) => console.log("Error", error));

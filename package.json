@@ -22,6 +22,7 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-elements": "^3.4.2",
+    "react-native-flatlist-alphabet": "^1.1.2",
     "react-native-paper": "^5.0.0-rc.10",
     "react-native-web": "~0.18.9"
   },

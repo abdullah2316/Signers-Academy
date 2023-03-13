@@ -1,9 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  SectionList,
+} from "react-native";
+import { Searchbar } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import { recents_list } from "./Dummydata.js";
+
+const DATA = [
+  {
+    title: "A",
+    data: ["apple", "ant", "axe"],
+  },
+  {
+    title: "B",
+    data: ["book", "bun", "bing"],
+  },
+  {
+    title: "C",
+    data: ["cat", "coat", "can"],
+  },
+  {
+    title: "D",
+    data: ["desktop", "ditch"],
+  },
+];
+
 function Dictionary({ navigation }) {
   const [items, setItems] = useState(recents_list);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const onChangeSearch = (query) => setSearchQuery(query);
   function handlePress(i, e) {
     // setItems(items.filter((_, ind) => i !== ind));
   }
@@ -21,7 +51,7 @@ function Dictionary({ navigation }) {
           />
         </Pressable>
       </View>
-      <View style={{ paddingBottom: "10%", flexDirection: "row" }}>
+      <View style={{ paddingBottom: "5%", flexDirection: "row" }}>
         <Text style={styles.ttext} textCenter>
           Dictionary
         </Text>
@@ -33,44 +63,54 @@ function Dictionary({ navigation }) {
           type='material'
         />
       </View>
-      <View style={styles.banner}>
-        <ScrollView>
-          {items &&
-            items.map((item, i) => (
-              <>
-                <View
-                  style={{
-                    borderBottomColor: "grey",
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                  }}
-                />
-                <Pressable
-                  style={styles.btn}
-                  onPress={() => {
-                    navigation.navigate("player", {
-                      path: item.path,
-                      name: item.name,
-                      urdu: item.urdu,
-                    });
-                  }}>
-                  <Text
-                    style={{
-                      color: "white",
-                      letterSpacing: 0.2,
-                      fontSize: 15,
-                    }}>
-                    {item.name}
-                  </Text>
-                </Pressable>
-              </>
-            ))}
-        </ScrollView>
-        <View
-          style={{
-            borderBottomColor: "grey",
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
+      <Searchbar
+        style={{ marginBottom: "10%" }}
+        placeholder='Search'
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
+      <View style={{ flexDirection: "row" }}>
+        <SectionList
+          style={{ marginBottom: "35%" }}
+          sections={DATA}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => (
+            <Pressable style={styles.item}>
+              <Text style={{ color: "white" }}>{item}</Text>
+            </Pressable>
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={{ color: "#FF3131", fontSize: 20 }}>{title}</Text>
+          )}
         />
+        <View style={{ flexDirection: "column" ,justifyContent:"space-between"}}>
+          <Text style={{ color: "white", fontSize: 8 }}>A</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>B</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>C</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>D</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>E</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>F</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>G</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>H</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>I</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>J</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>K</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>L</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>M</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>N</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>O</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>P</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>Q</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>R</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>S</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>T</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>U</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>V</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>W</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>X</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>Y</Text>
+          <Text style={{ color: "white", fontSize: 8 }}>Z</Text>
+        </View>
       </View>
     </View>
   );
@@ -124,6 +164,17 @@ const styles = StyleSheet.create({
     paddingBottom: "2%",
     borderRadius: 2,
     marginBottom: "5%",
+  },
+  item: {
+    color: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+  },
+  header: {
+    fontSize: 32,
+  },
+  title: {
+    fontSize: 24,
   },
 });
 export default Dictionary;
