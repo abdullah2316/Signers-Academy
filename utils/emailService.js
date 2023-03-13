@@ -1,36 +1,23 @@
-const http = require("http");
+const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 
 function sendPasswordResetEmail(email, OTP) {
-  const data = {
-    email: email,
-    otp: OTP,
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const msg = {
+    to: email,
+    from: "SignersAcademy@gmail.com",
+    subject: "Reset Password",
+    text: "test",
+    html: `<strong>OTP: ${OTP}</strong>`,
   };
-
-  const options = {
-    hostname: "127.0.0.1",
-    port: 5001,
-    path: "/sendmail",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": Buffer.byteLength(JSON.stringify(data)),
-    },
-  };
-
-  const req = http.request(options, (res) => {
-    console.log(`statusCode: ${res.statusCode}`);
-
-    res.on("data", (d) => {
-      process.stdout.write(d);
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
     });
-  });
-
-  req.on("error", (error) => {
-    console.error(error);
-  });
-
-  req.write(JSON.stringify(data));
-  req.end();
 }
 
 module.exports = sendPasswordResetEmail;
