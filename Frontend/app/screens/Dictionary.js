@@ -38,6 +38,11 @@ function Dictionary({ navigation }) {
     // setItems(items.filter((_, ind) => i !== ind));
   }
 
+//  useEffect(() => {
+   
+//  }, [third])
+ 
+
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "flex-start" }}>
