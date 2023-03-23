@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     flexDirection: "column",
-
     paddingBottom: "5%",
   },
   img: {

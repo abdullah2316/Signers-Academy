@@ -11,12 +11,15 @@ import {
   Alert,
 } from "react-native";
 import { TextInput } from "react-native-paper";
+import axios from "axios";
+
 function Signup({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
-  function Usersignup() {
+
+  const Usersignup = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !contact.trim()) {
       Alert.alert("Empty field", "All fields are required!", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -24,36 +27,75 @@ function Signup({ navigation }) {
 
       return;
     }
-    fetch("http://192.168.0.105:8000/api/v1/Users/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-        contactNumber: contact,
-      }),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        Alert.alert("Account created successfully", "Login to continue", [
-          {
-            text: "OK",
-            onPress: () => {
-              setName("");
-              setEmail("");
-              setPassword("");
-              setContact("");
-              navigation.navigate("login");
-            },
+    try {
+      console.log(name, email);
+      const response = await axios.post(
+        "http://192.168.1.7:4000/auth/register/",
+        {
+          name: name,
+          email: email,
+          password: password,
+          phone: contact,
+        }
+      );
+      console.log(response.data);
+      Alert.alert("Account created successfully", "Login to continue", [
+        {
+          text: "OK",
+          onPress: () => {
+            setName("");
+            setEmail("");
+            setPassword("");
+            setContact("");
+            navigation.navigate("login");
           },
-        ]);
-      })
-      .catch((error) => console.log("Error", error));
-  }
+        },
+      ]);
+      // handle successful login here
+    } catch (error) {
+      console.log(error);
+      // handle login error here
+    }
+  };
+
+  // function Usersignup() {
+  //   if (!name.trim() || !email.trim() || !password.trim() || !contact.trim()) {
+  //     Alert.alert("Empty field", "All fields are required!", [
+  //       { text: "OK", onPress: () => console.log("OK Pressed") },
+  //     ]);
+
+  //     return;
+  //   }
+  //   fetch("http://192.168.0.105:8000/api/v1/Users/", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name: name,
+  //       email: email,
+  //       password: password,
+  //       contactNumber: contact,
+  //     }),
+  //   })
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       Alert.alert("Account created successfully", "Login to continue", [
+  //         {
+  //           text: "OK",
+  //           onPress: () => {
+  //             setName("");
+  //             setEmail("");
+  //             setPassword("");
+  //             setContact("");
+  //             navigation.navigate("login");
+  //           },
+  //         },
+  //       ]);
+  //     })
+  //     .catch((error) => console.log("Error", error));
+  // }
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "flex-end" }}>

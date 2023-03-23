@@ -14,8 +14,7 @@ function PSLPlayer({ navigation, route }) {
     // Update the document title using the browser API
     replay ? setColreplay("#24a0ed") : setColreplay("white");
   });
-  var pth = route.params.path;
-
+  var link = route.params.path;
   var name = route.params.name;
   var urdu = route.params.urdu;
   return (
@@ -47,7 +46,7 @@ function PSLPlayer({ navigation, route }) {
         style={styles.video}
         // source={pth}
         source={{
-          uri: "https://api.aajkaadin.com/video?session=session&file=/storage/videos/d/720p/door_1616936686_69041.mp4",
+          uri: link,
         }}
         useNativeControls={false}
         resizeMode='stretch'

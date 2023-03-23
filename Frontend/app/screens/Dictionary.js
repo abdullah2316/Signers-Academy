@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,39 +9,45 @@ import {
 } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { Icon } from "react-native-elements";
+import axios from "axios";
 import { recents_list } from "./Dummydata.js";
 
-const DATA = [
-  {
-    title: "A",
-    data: ["apple", "ant", "axe"],
-  },
-  {
-    title: "B",
-    data: ["book", "bun", "bing"],
-  },
-  {
-    title: "C",
-    data: ["cat", "coat", "can"],
-  },
-  {
-    title: "D",
-    data: ["desktop", "ditch"],
-  },
-];
-
 function Dictionary({ navigation }) {
-  const [items, setItems] = useState(recents_list);
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const sectionListRef = useRef(null);
+  const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
+  const [flag, setFlag] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
-  function handlePress(i, e) {
-    // setItems(items.filter((_, ind) => i !== ind));
-  }
 
-//  useEffect(() => {
-   
-//  }, [third])
- 
+  useEffect(() => {
+    async function searchDict() {
+      console.log("val:", searchQuery);
+      if (searchQuery == "") {
+        const response = await axios.get(
+          `http://192.168.1.7:4000/dictionary/all`
+        );
+        setData(response.data.data);
+        setFlag(false);
+      } else {
+        const response = await axios.get(
+          `http://192.168.1.7:4000/dictionary/search?term=${searchQuery}`
+        );
+        setSearchRes(response.data);
+        setFlag(true);
+        console.log(searchRes);
+      }
+    }
+    searchDict();
+  }, [searchQuery]);
+  const scrollToSectionHeader = (sectionIndex) => {
+    sectionListRef.current?.scrollToLocation({
+      sectionIndex: sectionIndex,
+      itemIndex: 0,
+      viewPosition: 0,
+      animated: true,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -74,49 +80,90 @@ function Dictionary({ navigation }) {
         onChangeText={onChangeSearch}
         value={searchQuery}
       />
-      <View style={{ flexDirection: "row" }}>
-        <SectionList
-          style={{ marginBottom: "35%" }}
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => (
-            <Pressable style={styles.item}>
-              <Text style={{ color: "white" }}>{item}</Text>
-            </Pressable>
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={{ color: "#FF3131", fontSize: 20 }}>{title}</Text>
-          )}
-        />
-        <View style={{ flexDirection: "column" ,justifyContent:"space-between"}}>
-          <Text style={{ color: "white", fontSize: 8 }}>A</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>B</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>C</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>D</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>E</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>F</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>G</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>H</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>I</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>J</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>K</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>L</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>M</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>N</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>O</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>P</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>Q</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>R</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>S</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>T</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>U</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>V</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>W</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>X</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>Y</Text>
-          <Text style={{ color: "white", fontSize: 8 }}>Z</Text>
+
+      {flag ? (
+        <View style={styles.banner}>
+          <ScrollView>
+            {(searchRes ?? []).map((item, i) => (
+              <>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+                <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    navigation.navigate("player", {
+                      path: item.video_url,
+                      name: item.name_eng,
+                      urdu: item.name_urdu,
+                    });
+                  }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      letterSpacing: 0.2,
+                      fontSize: 15,
+                    }}>
+                    {item.name_eng}
+                  </Text>
+                </Pressable>
+              </>
+            ))}
+          </ScrollView>
+          <View
+            style={{
+              borderBottomColor: "grey",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
         </View>
-      </View>
+      ) : (
+        <View style={{ flexDirection: "row" }}>
+          <SectionList
+            style={{ marginBottom: "35%" }}
+            ref={sectionListRef}
+            sections={data}
+            keyExtractor={(item, index) => item + index}
+            onScrollToIndexFailed={(info) => {
+              console.warn(
+                `Failed to scroll to index ${info.index} in section ${info.section}`
+              );
+            }}
+            renderItem={({ item }) => (
+              <Pressable
+                style={styles.item}
+                onPress={() => {
+                  navigation.navigate("player", {
+                    path: item.link,
+                    name: item.eng_word,
+                    urdu: item.urdu_word,
+                  });
+                }}>
+                <Text style={{ color: "white" }}>{item.eng_word}</Text>
+              </Pressable>
+            )}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={{ color: "#FF3131", fontSize: 20 }}>
+                {title.toUpperCase()}
+              </Text>
+            )}
+          />
+          <View style={{ flexDirection: "column" }}>
+            {(data ?? []).map((item, index) => (
+              <Pressable
+                key={index}
+                onPress={() => scrollToSectionHeader(index)}>
+                <Text style={{ color: "white", fontSize: 12 }}>
+                  {item.title.toUpperCase()}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      )}
     </View>
   );
 }

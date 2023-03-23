@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 //import axios from "axios";
 import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
+import axios from "axios";
+import * as SecureStore from 'expo-secure-store';
+
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  function Userlogin() {
+
+  const Userlogin = async () => {
     if (!email.trim() || !password.trim()) {
       Alert.alert("Empty field", "All fields are required!", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -13,34 +17,73 @@ function Login({ navigation }) {
 
       return;
     }
-    fetch(
-      "http://192.168.1.3:8000/api/v1/Users/login/?email=" +
-        email +
-        "&password=" +
-        password,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data.length);
-        if (data.length === 0) {
-          Alert.alert("Login Failed", "Invalid email or password", [
-            { text: "OK" },
-          ]);
-          return;
+    try {
+      console.log(email);
+      const response = await axios.post(
+        "http://192.168.1.7:4000/auth/login/",
+        {
+          email: email,
+          password: password,
         }
-        console.log(data[0].name);
-        global.user_id = data[0].email;
-        navigation.navigate("menu");
-      })
-      .catch((error) => console.log("Error", error));
-  }
+      );
+      console.log(response.data.token);
+      await SecureStore.setItemAsync('token', response.data.token);
+      Alert.alert("Login successfull", "Login to continue", [
+                 {
+                   text: "OK",
+                   onPress: () => {
+                     setEmail("");
+                     setPassword("");
+
+                     navigation.navigate("menu");
+                   },
+                 },
+               ]);
+      // handle successful login here
+
+      navigation.navigate("menu");
+    } catch (error) {
+      console.log(error);
+      // handle login error here
+    }
+  };
+
+  // function Userlogin() {
+  //   if (!email.trim() || !password.trim()) {
+  //     Alert.alert("Empty field", "All fields are required!", [
+  //       { text: "OK", onPress: () => console.log("OK Pressed") },
+  //     ]);
+
+  //     return;
+  //   }
+  //   fetch(
+  //     "http://192.168.1.3:8000/api/v1/Users/login/?email=" +
+  //       email +
+  //       "&password=" +
+  //       password,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   )
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       console.log(data.length);
+  //       if (data.length === 0) {
+  //         Alert.alert("Login Failed", "Invalid email or password", [
+  //           { text: "OK" },
+  //         ]);
+  //         return;
+  //       }
+  //       console.log(data[0].name);
+  //       global.user_id = data[0].email;
+  //       navigation.navigate("menu");
+  //     })
+  //     .catch((error) => console.log("Error", error));
+  // }
 
   return (
     <View style={styles.container}>

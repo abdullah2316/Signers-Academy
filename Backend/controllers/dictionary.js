@@ -2,11 +2,31 @@ const dictionaryModel = require("../models/dictionary");
 
 module.exports = {
   getall: async function (req, res) {
-    const query = dictionaryModel.find();
+    const query = dictionaryModel.find().sort("name_eng");
     query
       .exec()
       .then((docs) => {
-        return res.json(docs);
+        let allDocs = [];
+        let currAlphabet = "a";
+        let words = [];
+        for (const doc of docs) {
+          if (doc.name_eng[0].toLocaleLowerCase() !== currAlphabet) {
+            allDocs.push({
+              title: currAlphabet,
+              data: words,
+            });
+            currAlphabet = doc.name_eng[0].toLocaleLowerCase();
+            words = [];
+          }
+          words.push({
+            eng_word: doc.name_eng.toLocaleLowerCase(),
+            urdu_word: doc.name_urdu,
+            link: doc.video_url,
+          });
+        }
+        return res.json({
+          data: allDocs,
+        });
       })
       .catch((err) => {
         return res.status(500).json({

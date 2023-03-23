@@ -8,6 +8,14 @@ function Menu({ navigation, route }) {
       }),
     [navigation]
   );
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
@@ -28,7 +36,7 @@ function Menu({ navigation, route }) {
           onPress={() => navigation.navigate("dictionary")}>
           <Text style={{ color: "black", letterSpacing: 0.2 }}>Dictionary</Text>
         </Pressable>
-        {global.user_id && (
+        {getValueFor('token') && (
           <>
             <Pressable
               onPress={() => navigation.navigate("favorites")}
