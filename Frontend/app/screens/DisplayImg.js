@@ -11,6 +11,7 @@ import {
   ImageBackground,
 } from "react-native";
 import axios from "axios";
+import { API_BASE_URL } from "../../config";
 function DisplayImg({ route, navigation }) {
   const { imgURI } = route.params.path;
 
@@ -24,7 +25,7 @@ function DisplayImg({ route, navigation }) {
     });
     try {
       const response = await axios.post(
-        "http://192.168.1.7:5001/predict",
+        "http://192.168.1.2:5001/predict",
         formData,
         {
           headers: {
@@ -32,16 +33,18 @@ function DisplayImg({ route, navigation }) {
           },
         }
       );
-      // const response = await axios.post(
-      //   "http://192.168.1.7:5001/predict",
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
-      // );
-      console.log(response);
+
+      console.log(response.data.class_label);
+      const response2 = await axios.get(
+        `${API_BASE_URL}/dictionary/getword/${response.data.class_label}`
+      );
+      console.log(response2.data);
+      navigation.navigate("player", {
+        path: response2.data.video_url,
+        name: response2.data.name_eng,
+        urdu: response2.data.name_urdu,
+        id: response2.data._id,
+      });
     } catch (error) {
       console.log(error);
     }

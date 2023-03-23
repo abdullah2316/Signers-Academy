@@ -24,6 +24,7 @@ function Login({ navigation }) {
         email: email,
         password: password,
       });
+
       console.log(response.data.token);
       await SecureStore.setItemAsync("token", response.data.token);
       Alert.alert("Login successfull", "Login to continue", [

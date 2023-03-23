@@ -51,4 +51,17 @@ module.exports = {
       return res.status(500).json({ message: "retrieval error", error: err });
     }
   },
+  getword: async function (req, res) {
+    const word=req.params.word
+    try {
+      const w = await dictionaryModel.findOne({name_eng:word})
+      if (w) {
+        return res.json(w);
+      } else {
+        return res.status(404).json({ message: "word not found"})
+      }
+    } catch (error) {
+      return res.status(500).json({ message: "retrieval error"})
+    }
+  },
 };
