@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
 import axios from "axios";
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
+import { API_BASE_URL } from '../../config';
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -19,26 +20,23 @@ function Login({ navigation }) {
     }
     try {
       console.log(email);
-      const response = await axios.post(
-        "http://192.168.1.7:4000/auth/login/",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/auth/login/`, {
+        email: email,
+        password: password,
+      });
       console.log(response.data.token);
-      await SecureStore.setItemAsync('token', response.data.token);
+      await SecureStore.setItemAsync("token", response.data.token);
       Alert.alert("Login successfull", "Login to continue", [
-                 {
-                   text: "OK",
-                   onPress: () => {
-                     setEmail("");
-                     setPassword("");
+        {
+          text: "OK",
+          onPress: () => {
+            setEmail("");
+            setPassword("");
 
-                     navigation.navigate("menu");
-                   },
-                 },
-               ]);
+            navigation.navigate("menu");
+          },
+        },
+      ]);
       // handle successful login here
 
       navigation.navigate("menu");

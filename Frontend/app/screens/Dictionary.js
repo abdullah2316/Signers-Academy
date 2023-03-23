@@ -11,6 +11,7 @@ import { Searchbar } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import { recents_list } from "./Dummydata.js";
+import { API_BASE_URL } from '../../config';
 
 function Dictionary({ navigation }) {
   const sectionListRef = useRef(null);
@@ -24,14 +25,12 @@ function Dictionary({ navigation }) {
     async function searchDict() {
       console.log("val:", searchQuery);
       if (searchQuery == "") {
-        const response = await axios.get(
-          `http://192.168.1.7:4000/dictionary/all`
-        );
+        const response = await axios.get(`${ API_BASE_URL }/dictionary/all`);
         setData(response.data.data);
         setFlag(false);
       } else {
         const response = await axios.get(
-          `http://192.168.1.7:4000/dictionary/search?term=${searchQuery}`
+          `${ API_BASE_URL }/dictionary/search?term=${searchQuery}`
         );
         setSearchRes(response.data);
         setFlag(true);
@@ -99,7 +98,7 @@ function Dictionary({ navigation }) {
                       path: item.video_url,
                       name: item.name_eng,
                       urdu: item.name_urdu,
-                      id: item._id
+                      id: item._id,
                     });
                   }}>
                   <Text
@@ -141,7 +140,7 @@ function Dictionary({ navigation }) {
                     path: item.link,
                     name: item.eng_word,
                     urdu: item.urdu_word,
-                    id: item.id
+                    id: item.id,
                   });
                 }}>
                 <Text style={{ color: "white" }}>{item.eng_word}</Text>

@@ -5,7 +5,8 @@ import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import { TabRouter } from "@react-navigation/native";
+import { API_BASE_URL } from '../../config';
+
 function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -19,7 +20,7 @@ function PSLPlayer({ navigation, route }) {
       let token = await SecureStore.getItemAsync("token");
       if (token) {
         const response = await axios.get(
-          `http://192.168.1.7:4000/favourite/isfav/${route.params.id}`,
+          `${ API_BASE_URL }/favourite/isfav/${route.params.id}`,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -45,7 +46,7 @@ function PSLPlayer({ navigation, route }) {
         let token = await SecureStore.getItemAsync("token");
         console.log(token);
         const response = await axios.post(
-          `http://192.168.1.7:4000/favourite/add/${route.params.id}`,
+          `${ API_BASE_URL }/favourite/add/${route.params.id}`,
           {},
           {
             headers: {
@@ -57,7 +58,7 @@ function PSLPlayer({ navigation, route }) {
       } else if (isliked == "red") {
         let token = await SecureStore.getItemAsync("token");
         const response = await axios.delete(
-          `http://192.168.1.7:4000/favourite/remove/${route.params.id}`,
+          `${ API_BASE_URL }/favourite/remove/${route.params.id}`,
           {
             headers: {
               Authorization: "Bearer " + token,

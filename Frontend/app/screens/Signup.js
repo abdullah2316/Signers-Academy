@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import axios from "axios";
+import { API_BASE_URL } from '../../config';
 
 function Signup({ navigation }) {
   const [name, setName] = useState("");
@@ -30,7 +31,7 @@ function Signup({ navigation }) {
     try {
       console.log(name, email);
       const response = await axios.post(
-        "http://192.168.1.7:4000/auth/register/",
+        `${ API_BASE_URL }/auth/register/`,
         {
           name: name,
           email: email,
