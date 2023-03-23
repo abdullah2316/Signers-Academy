@@ -89,4 +89,30 @@ module.exports = {
       });
     }
   },
+  is_Fav: async function (req, res) {
+    const uid = req.user.id;
+    const wid = req.params.wid;
+
+    try {
+      const fav = await favModel.findOne({ user_id: uid });
+      if (!fav) {
+        return res.status(404).json({
+          message: "no such user",
+        });
+      } else {
+        const index = fav.words.indexOf(wid);
+        if (index !== -1) {
+          res.status(200).json({
+            fav: true,
+          });
+        } else {
+          res.status(200).json({
+            fav: false,
+          });
+        }
+      }
+    } catch (error) {
+      return res.status(500).json({ message: error });
+    }
+  },
 };

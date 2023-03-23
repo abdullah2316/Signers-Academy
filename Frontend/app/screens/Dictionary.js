@@ -99,6 +99,7 @@ function Dictionary({ navigation }) {
                       path: item.video_url,
                       name: item.name_eng,
                       urdu: item.name_urdu,
+                      id: item._id
                     });
                   }}>
                   <Text
@@ -140,6 +141,7 @@ function Dictionary({ navigation }) {
                     path: item.link,
                     name: item.eng_word,
                     urdu: item.urdu_word,
+                    id: item.id
                   });
                 }}>
                 <Text style={{ color: "white" }}>{item.eng_word}</Text>

@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { Icon } from "react-native-elements";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
+import * as SecureStore from "expo-secure-store";
+import axios from "axios";
 import { TabRouter } from "@react-navigation/native";
 function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
@@ -10,13 +12,69 @@ function PSLPlayer({ navigation, route }) {
   const [iconName, setIconName] = useState("play-circle-filled");
   const [replay, setReplay] = useState(false);
   const [colreplay, setColreplay] = useState("white");
+  const [isliked, setIsliked] = useState("");
+
   useEffect(() => {
-    // Update the document title using the browser API
-    replay ? setColreplay("#24a0ed") : setColreplay("white");
-  });
-  var link = route.params.path;
-  var name = route.params.name;
-  var urdu = route.params.urdu;
+    async function getLikedStatus() {
+      let token = await SecureStore.getItemAsync("token");
+      if (token) {
+        const response = await axios.get(
+          `http://192.168.1.7:4000/favourite/isfav/${route.params.id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        console.log(response.data.fav);
+        if (response.data.fav) setIsliked("red");
+        else setIsliked("white");
+      } else {
+        setIsliked("#808080");
+      }
+    }
+    getLikedStatus();
+  }, []);
+  const like = async function () {
+    if (isliked == "#808080") {
+      return;
+    }
+    try {
+      console.log(route.params.id);
+      if (isliked == "white") {
+        let token = await SecureStore.getItemAsync("token");
+        console.log(token);
+        const response = await axios.post(
+          `http://192.168.1.7:4000/favourite/add/${route.params.id}`,
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setIsliked("red");
+      } else if (isliked == "red") {
+        let token = await SecureStore.getItemAsync("token");
+        const response = await axios.delete(
+          `http://192.168.1.7:4000/favourite/remove/${route.params.id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setIsliked("white");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  let link = route.params.path;
+  let name = route.params.name;
+  let urdu = route.params.urdu;
+  console.log(link);
   return (
     <LinearGradient
       style={styles.container}
@@ -98,14 +156,11 @@ function PSLPlayer({ navigation, route }) {
           />
         </Pressable>
 
-        <Pressable
-          style={styles.button}
-          o
-          onPress={() => video.current.replayAsync()}>
+        <Pressable style={styles.button} onPress={like}>
           <Icon
             style={styles.icon}
             name='favorite'
-            color='red'
+            color={isliked}
             size={30}
             type='material'
           />

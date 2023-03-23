@@ -22,6 +22,7 @@ module.exports = {
             eng_word: doc.name_eng.toLocaleLowerCase(),
             urdu_word: doc.name_urdu,
             link: doc.video_url,
+            id: doc._id,
           });
         }
         return res.json({

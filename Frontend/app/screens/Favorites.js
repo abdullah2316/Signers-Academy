@@ -1,13 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView , Pressable } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { Icon } from "react-native-elements";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 import { items_list } from "./Dummydata.js";
 function Favorites({ navigation }) {
-  const [items, setItems] = useState(items_list);
-  function handlePress(i, e) {
-    setItems(items.filter((_, ind) => i !== ind));
+  const [items, setItems] = useState([]);
+  async function handlePress(i, e) {
+    const wid = items[i].id;
+    let token = await SecureStore.getItemAsync("token");
+    const response = await axios.delete(
+      `http://192.168.1.7:4000/favourite/remove/${wid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+
+    setItems(items);
   }
-  var source;
+
+  useEffect(() => {
+    async function getFavs() {
+      let token = await SecureStore.getItemAsync("token");
+      const response = await axios.get(
+        "http://192.168.1.7:4000/favourite/get",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setItems(response.data);
+    }
+    getFavs();
+  }, [items]);
+
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "flex-start" }}>
@@ -21,41 +51,53 @@ function Favorites({ navigation }) {
           />
         </Pressable>
       </View>
-      <View style={{paddingBottom:"10%"}}>
-        <Text style={styles.ttext} textCenter>Favorites</Text>
+      <View style={{ paddingBottom: "10%" }}>
+        <Text style={styles.ttext} textCenter>
+          Favorites
+        </Text>
       </View>
       <View style={styles.banner}>
-      <ScrollView >
-        {items &&
-          items.map((item, i) => (
-            <>
-           
-              <View  
-                style={{
-                  borderBottomColor: "grey",
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                }}
-              />
-              <Pressable 
-                style={styles.btn}
-                onPress={() => {navigation.navigate("player", {path: item.path, name: item.name, urdu: item.urdu})}}>
-                <Text
-                  style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
-                  {item.name}
-                </Text>
-                <Pressable onPress={(e) => handlePress(i, e)}>
-                  <Icon
-                    style={styles.icon}
-                    name='favorite'
-                    color='red'
-                    size={30}
-                    type='material'
-                  />
+        <ScrollView>
+          {items &&
+            items.map((item, i) => (
+              <>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+                <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    navigation.navigate("player", {
+                      path: item.link,
+                      name: item.name_eng,
+                      urdu: item.name_urdu,
+                      id: item.id,
+                    });
+                  }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      letterSpacing: 0.2,
+                      fontSize: 15,
+                    }}>
+                    {item.name_eng}
+                  </Text>
+                  <Pressable onPress={(e) => handlePress(i, e)}>
+                    <Icon
+                      style={styles.icon}
+                      name='favorite'
+                      color='red'
+                      size={30}
+                      type='material'
+                    />
+                  </Pressable>
                 </Pressable>
-              </Pressable>
-            </>
-          ))}
-</ScrollView>
+              </>
+            ))}
+        </ScrollView>
         <View
           style={{
             borderBottomColor: "grey",
