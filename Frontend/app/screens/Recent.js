@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView , Pressable } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { Icon } from "react-native-elements";
-import { recents_list } from "./Dummydata.js";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+import { API_BASE_URL } from "../../config";
+import { items_list } from "./Dummydata.js";
 function Recents({ navigation }) {
-  const [items, setItems] = useState(recents_list);
-  function handlePress(i, e) {
-    // setItems(items.filter((_, ind) => i !== ind));
-  }
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function getRec() {
+      let token = await SecureStore.getItemAsync("token");
+      const response = await axios.get(`${API_BASE_URL}/recent/get`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      setItems(response.data);
+    }
+    getRec();
+  }, [items]);
 
   return (
     <View style={styles.container}>
@@ -21,64 +35,51 @@ function Recents({ navigation }) {
           />
         </Pressable>
       </View>
-      <View style={{paddingBottom:"10%",flexDirection:"row"}}>
-        <Text style={styles.ttext} textCenter>Recents</Text>
+      <View style={{ paddingBottom: "10%", flexDirection: "row" }}>
+        <Text style={styles.ttext} textCenter>
+          Recents
+        </Text>
         <Icon
-            style={{marginLeft:"5%",marginTop:"12%"}}
-            name='history'
-            color='white'
-            size={30}
-            type='material'
-          />
+          style={{ marginLeft: "5%", marginTop: "12%" }}
+          name='history'
+          color='white'
+          size={30}
+          type='material'
+        />
       </View>
       <View style={styles.banner}>
-      <ScrollView>
-        {items &&
-          items.map((item, i) => (
-            <>
-              <View 
-                style={{
-                  borderBottomColor: "grey",
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                }}
-              />
-              <Pressable
-                style={styles.btn}
-                onPress={() => {navigation.navigate("player", {path: item.path, name: item.name, urdu: item.urdu})}}>
-                <Text
-                  style={{ color: "white", letterSpacing: 0.2, fontSize: 15 }}>
-                  {item.name}
-                </Text>
-                {item.liked &&
-                <Pressable onPress={(e) => handlePress(i, e)}>
-                  
-                  <Icon
-                    style={styles.icon}
-                    name='favorite'
-                    color='red'
-                    size={30}
-                    type='material'
-                  />
-
+        <ScrollView>
+          {items &&
+            items.map((item, i) => (
+              <>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+                <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    navigation.navigate("player", {
+                      path: item.link,
+                      name: item.name_eng,
+                      urdu: item.name_urdu,
+                      id: item.id,
+                    });
+                  }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      letterSpacing: 0.2,
+                      fontSize: 15,
+                    }}>
+                    {item.name_eng}
+                  </Text>
                 </Pressable>
-                  }
-                  {!item.liked &&
-                <Pressable onPress={(e) => handlePress(i, e)}>
-                  
-                  <Icon
-                    style={styles.icon}
-                    name='favorite-border'
-                    color='white'
-                    size={30}
-                    type='material'
-                  />
-
-                </Pressable>
-                  }
-              </Pressable>
-            </>
-          ))}
-</ScrollView>
+              </>
+            ))}
+        </ScrollView>
         <View
           style={{
             borderBottomColor: "grey",
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     flexDirection: "column",
-
     paddingBottom: "5%",
   },
   img: {

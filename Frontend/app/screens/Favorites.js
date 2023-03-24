@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from "../../config";
 import { items_list } from "./Dummydata.js";
 function Favorites({ navigation }) {
   const [items, setItems] = useState([]);
@@ -11,7 +11,7 @@ function Favorites({ navigation }) {
     const wid = items[i].id;
     let token = await SecureStore.getItemAsync("token");
     const response = await axios.delete(
-      `${ API_BASE_URL }/favourite/remove/${wid}`,
+      `${API_BASE_URL}/favourite/remove/${wid}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -25,14 +25,11 @@ function Favorites({ navigation }) {
   useEffect(() => {
     async function getFavs() {
       let token = await SecureStore.getItemAsync("token");
-      const response = await axios.get(
-        "http://192.168.1.7:4000/favourite/get",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const response = await axios.get(`${API_BASE_URL}/favourite/get`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
       setItems(response.data);
     }

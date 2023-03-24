@@ -5,7 +5,7 @@ import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from "../../config";
 
 function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
@@ -20,7 +20,7 @@ function PSLPlayer({ navigation, route }) {
       let token = await SecureStore.getItemAsync("token");
       if (token) {
         const response = await axios.get(
-          `${ API_BASE_URL }/favourite/isfav/${route.params.id}`,
+          `${API_BASE_URL}/favourite/isfav/${route.params.id}`,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -34,7 +34,25 @@ function PSLPlayer({ navigation, route }) {
         setIsliked("#808080");
       }
     }
+    async function addtorecent() {
+      let token = await SecureStore.getItemAsync("token");
+      if (token) {
+        const response = await axios.post(
+          `${API_BASE_URL}/recent/add/${route.params.id}`,
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        console.log(response.data);
+      } else {
+        console.log("Invalid token");
+      }
+    }
     getLikedStatus();
+    addtorecent();
   }, []);
   const like = async function () {
     if (isliked == "#808080") {
@@ -46,7 +64,7 @@ function PSLPlayer({ navigation, route }) {
         let token = await SecureStore.getItemAsync("token");
         console.log(token);
         const response = await axios.post(
-          `${ API_BASE_URL }/favourite/add/${route.params.id}`,
+          `${API_BASE_URL}/favourite/add/${route.params.id}`,
           {},
           {
             headers: {
@@ -58,7 +76,7 @@ function PSLPlayer({ navigation, route }) {
       } else if (isliked == "red") {
         let token = await SecureStore.getItemAsync("token");
         const response = await axios.delete(
-          `${ API_BASE_URL }/favourite/remove/${route.params.id}`,
+          `${API_BASE_URL}/favourite/remove/${route.params.id}`,
           {
             headers: {
               Authorization: "Bearer " + token,
