@@ -9,10 +9,12 @@ import {
   Pressable,
   Image,
   ImageBackground,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { API_BASE_URL } from "../../config";
 function DisplayImg({ route, navigation }) {
+  const [processing, setProcessing] = React.useState(false);
   const { imgURI } = route.params.path;
 
   const sendImage = async function () {
@@ -24,8 +26,9 @@ function DisplayImg({ route, navigation }) {
       name: "image.jpg",
     });
     try {
+      setProcessing(true);
       const response = await axios.post(
-        "http://192.168.1.2:5001/predict",
+        "http://192.168.1.4:5001/predict",
         formData,
         {
           headers: {
@@ -39,6 +42,7 @@ function DisplayImg({ route, navigation }) {
         `${API_BASE_URL}/dictionary/getword/${response.data.class_label}`
       );
       console.log(response2.data);
+      setProcessing(false);
       navigation.navigate("player", {
         path: response2.data.video_url,
         name: response2.data.name_eng,
@@ -52,30 +56,39 @@ function DisplayImg({ route, navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground source={{ uri: route.params.path }} style={{ flex: 1 }}>
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={sendImage}>
-            <Icon
-              style={styles.icon}
-              name='done'
-              color='white'
-              size={60}
-              type='material'
-            />
-          </Pressable>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("capture");
-            }}>
-            <Icon
-              style={styles.icon}
-              name='replay'
-              color='white'
-              size={60}
-              type='material'
-            />
-          </Pressable>
-        </View>
+        {processing ? (
+          <ActivityIndicator
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            size='large'
+            color='#00ff00'
+            animating={true}
+          />
+        ) : (
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.button} onPress={sendImage}>
+              <Icon
+                style={styles.icon}
+                name='done'
+                color='white'
+                size={60}
+                type='material'
+              />
+            </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("capture");
+              }}>
+              <Icon
+                style={styles.icon}
+                name='replay'
+                color='white'
+                size={60}
+                type='material'
+              />
+            </Pressable>
+          </View>
+        )}
       </ImageBackground>
     </View>
   );

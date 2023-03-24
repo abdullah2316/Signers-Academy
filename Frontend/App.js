@@ -1,4 +1,5 @@
 // import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,29 +11,49 @@ import {
 
 import Signup from "./app/screens/Signup.js";
 import Login from "./app/screens/Login.js";
-import Menu from "./app/screens/Menu.js";
+import MyMenu from "./app/screens/Menu.js";
 import Favorites from "./app/screens/Favorites.js";
 import Recent from "./app/screens/Recent.js";
 import PSLPlayer from "./app/screens/PslPlayer.js";
 import Capture from "./app/screens/Capture.js";
 import Display from "./app/screens/DisplayImg.js";
 import Dictionary from "./app/screens/Dictionary.js";
-
+import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const [startpage, setStartpage] = useState(null);
+
+  useEffect(() => {
+    async function checkKey() {
+      const token = await SecureStore.getItemAsync("token");
+      console.log(token);
+      if (Boolean(token)) {
+        console.log("ououo");
+        setStartpage("menu");
+        console.log(startpage);
+      } else {
+        console.log("nop");
+        setStartpage("login");
+      }
+    }
+    checkKey();
+  }, [startpage]);
   return (
-    <SafeAreaView style={styles.safe}>
+    <>
+    {startpage && (
+      <><SafeAreaView style={styles.safe}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName='login'
+          initialRouteName={startpage}
           screenOptions={{
             headerShown: false,
           }}>
           <Stack.Screen name='login' component={Login} />
           <Stack.Screen name='signup' component={Signup} />
-          <Stack.Screen name='menu' component={Menu} />
+          <Stack.Screen name='menu' component={MyMenu} />
           <Stack.Screen name='favorites' component={Favorites} />
           <Stack.Screen name='recent' component={Recent} />
           <Stack.Screen name='capture' component={Capture} />
@@ -41,7 +62,8 @@ export default function App() {
           <Stack.Screen name='dictionary' component={Dictionary} />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaView></>)}
+    </>
   );
 }
 
