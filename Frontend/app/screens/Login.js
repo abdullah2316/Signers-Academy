@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
 //import axios from "axios";
-import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  Alert,
+  Modal,
+} from "react-native";
+import { Icon } from "react-native-elements";
 import { TextInput } from "react-native-paper";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from "../../config";
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const Userlogin = async () => {
     if (!email.trim() || !password.trim()) {
@@ -27,7 +37,7 @@ function Login({ navigation }) {
 
       console.log(response.data.token);
       await SecureStore.setItemAsync("token", response.data.token);
-      Alert.alert("Login successfull", "Login to continue", [
+      Alert.alert("Login successfull", "continue", [
         {
           text: "OK",
           onPress: () => {
@@ -46,43 +56,6 @@ function Login({ navigation }) {
       // handle login error here
     }
   };
-
-  // function Userlogin() {
-  //   if (!email.trim() || !password.trim()) {
-  //     Alert.alert("Empty field", "All fields are required!", [
-  //       { text: "OK", onPress: () => console.log("OK Pressed") },
-  //     ]);
-
-  //     return;
-  //   }
-  //   fetch(
-  //     "http://192.168.1.3:8000/api/v1/Users/login/?email=" +
-  //       email +
-  //       "&password=" +
-  //       password,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   )
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       console.log(data.length);
-  //       if (data.length === 0) {
-  //         Alert.alert("Login Failed", "Invalid email or password", [
-  //           { text: "OK" },
-  //         ]);
-  //         return;
-  //       }
-  //       console.log(data[0].name);
-  //       global.user_id = data[0].email;
-  //       navigation.navigate("menu");
-  //     })
-  //     .catch((error) => console.log("Error", error));
-  // }
 
   return (
     <View style={styles.container}>
@@ -116,6 +89,48 @@ function Login({ navigation }) {
         </Text>
       </View>
       <View style={styles.banner}>
+        <Modal
+          animationType='fade'
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalstyle}>
+              <Pressable
+                style={{ alignSelf: "flex-end" }}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Icon
+                  style={{
+                    backgroundColor: "red",
+                    borderWidth: 2,
+                    borderRadius: 15,
+                  }}
+                  name='close'
+                  color='white'
+                  size={20}
+                  type='material'
+                />
+              </Pressable>
+              <Text style={styles.ttext}>Enter Email to receive an OTP</Text>
+              <TextInput
+                textColor='white'
+                mode='outlined'
+                label='Email'
+                value={email}
+                onChangeText={setEmail}
+                activeOutlineColor='#FF3131'
+                outlineColor='#899499'
+                style={styles.textInput}></TextInput>
+              <Pressable style={styles.btn}>
+                <Text>get OTP</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
         <TextInput
           textColor='white'
           mode='outlined'
@@ -140,15 +155,16 @@ function Login({ navigation }) {
           {/* onPress={() => navigation.navigate("menu")}> */}
           <Text style={{ color: "white", letterSpacing: 0.2 }}>Log in</Text>
         </Pressable>
-
-        <Text //forgot password
-          style={{
-            color: "#7393B3",
-            fontWeight: "bold",
-            fontSize: 12,
-          }}>
-          Forgot password?
-        </Text>
+        <Pressable onPress={() => setModalVisible(true)}>
+          <Text
+            style={{
+              color: "#7393B3",
+              fontWeight: "bold",
+              fontSize: 12,
+            }}>
+            Forgot password?
+          </Text>
+        </Pressable>
       </View>
 
       <Text
@@ -237,6 +253,28 @@ const styles = StyleSheet.create({
     paddingBottom: "2%",
     borderRadius: 2,
     marginBottom: "5%",
+  },
+  modalstyle: {
+    margin: "4%",
+    backgroundColor: "black",
+    borderWidth: 2,
+    borderColor: "#B2BEB5",
+    borderRadius: 20,
+    padding: "6%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    marginTop: "12%",
   },
 });
 export default Login;
