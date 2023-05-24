@@ -16,3 +16,8 @@ const DictionarySchema = new Schema({
   },
 });
 module.exports = mongoose.model("Dictionary", DictionarySchema);
+
+
+
+
+
