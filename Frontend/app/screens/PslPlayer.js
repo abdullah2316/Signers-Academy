@@ -18,7 +18,10 @@ function PSLPlayer({ navigation, route }) {
   useEffect(() => {
     async function getLikedStatus() {
       let token = await SecureStore.getItemAsync("token");
+      console.log(token);
+
       if (token) {
+        
         const response = await axios.get(
           `${API_BASE_URL}/favourite/isfav/${route.params.id}`,
           {
