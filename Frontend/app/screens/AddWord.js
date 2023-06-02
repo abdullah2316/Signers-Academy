@@ -47,7 +47,10 @@ function AddWord({ navigation }) {
       }
     };
     return(
-        <View style={styles.banner}>
+        <View style={styles.container}>
+           <Text style={styles.heading} textCenter>
+         Add Word
+        </Text>
             <TextInput
             textColor='white'
             mode='outlined'
@@ -88,12 +91,18 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: "column",
-      justifyContent: "space-between",
       backgroundColor: "black",
       paddingBottom: "10%",
-      paddingTop: "15%",
+      paddingTop: "30%",
       paddingLeft: "5%",
       paddingRight: "5%",
+      alignItems: "center"
+    },
+    heading:{
+      color: "white",
+      letterSpacing: 0.2,
+      fontSize: 30,
+    fontWeight: 'bold',
     },
     ttext: {
       color: "white",

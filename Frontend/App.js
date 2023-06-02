@@ -18,6 +18,7 @@ import PSLPlayer from "./app/screens/PslPlayer.js";
 import Capture from "./app/screens/Capture.js";
 import Display from "./app/screens/DisplayImg.js";
 import Dictionary from "./app/screens/Dictionary.js";
+import AddWord from "./app/screens/AddWord.js";
 import otp from "./app/screens/otp.js";
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -52,7 +53,7 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name='login' component={Login} />
+          <Stack.Screen name='login' component={AddWord} />
           <Stack.Screen name='signup' component={Signup} />
           <Stack.Screen name='menu' component={MyMenu} />
           <Stack.Screen name='favorites' component={Favorites} />
