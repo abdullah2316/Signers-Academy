@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor: "black",
+      backgroundColor: "white",
       paddingBottom: "10%",
       paddingTop: "30%",
       paddingLeft: "5%",
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
       alignItems: "center"
     },
     heading:{
-      color: "white",
+      color: "black",
       letterSpacing: 0.2,
       fontSize: 30,
     fontWeight: 'bold',
     },
     ttext: {
-      color: "white",
+      color: "black",
       letterSpacing: 0.2,
     },
     banner: {
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
       resizeMode: "stretch",
     },
     textInput: {
-      backgroundColor: "black",
+      backgroundColor: "white",
       width: "70%",
       marginBottom: "5%",
     },
     btn: {
-      backgroundColor: "#FF3131",
+      backgroundColor: "#5DBB63",
       width: "70%",
       alignItems: "center",
       paddingTop: "2%",
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
       marginBottom: "5%",
     },
     btn2: {
-      backgroundColor: "#B2BEB5",
+      backgroundColor: "#5DBB63",
       width: "70%",
       alignItems: "center",
       paddingTop: "2%",

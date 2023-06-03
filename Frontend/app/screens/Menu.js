@@ -34,7 +34,7 @@ function MyMenu({ navigation, route }) {
       <View
         style={{
           flex: 0.05,
-          backgroundColor: "black",
+          backgroundColor: "white",
           paddingTop: "10%",
           paddingRight: "5%",
         }}>
@@ -62,7 +62,7 @@ function MyMenu({ navigation, route }) {
       </View>
       <View style={styles.container}>
         <View style={styles.banner}>
-          <Image style={styles.img} source={require("../assets/signers.jpg")} />
+          <Image style={styles.img} source={require("../assets/signers.png")} />
         </View>
         <View style={{ alignItems: "center" }}>
           <Text style={styles.ttext}>Signers</Text>
@@ -73,12 +73,12 @@ function MyMenu({ navigation, route }) {
           <Pressable
             style={styles.btn}
             onPress={() => navigation.navigate("capture")}>
-            <Text style={{ color: "black", letterSpacing: 0.2 }}>Capture</Text>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>Capture</Text>
           </Pressable>
           <Pressable
             style={styles.btn}
             onPress={() => navigation.navigate("dictionary")}>
-            <Text style={{ color: "black", letterSpacing: 0.2 }}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>
               Dictionary
             </Text>
           </Pressable>
@@ -87,19 +87,19 @@ function MyMenu({ navigation, route }) {
               <Pressable
                 onPress={() => navigation.navigate("favorites")}
                 style={styles.btn}>
-                <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                <Text style={{ color:"white", letterSpacing: 0.2 }}>
                   Favorites
                 </Text>
               </Pressable>
               <Pressable
                 style={styles.btn}
                 onPress={() => navigation.navigate("recent")}>
-                <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                <Text style={{ color: "white", letterSpacing: 0.2 }}>
                   Recents
                 </Text>
               </Pressable>
               <Pressable style={styles.btn}>
-                <Text style={{ color: "black", letterSpacing: 0.2 }}>
+                <Text style={{ color: "white", letterSpacing: 0.2 }}>
                   Suggested
                 </Text>
               </Pressable>
@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
     fontSize: 30,
     fontWeight: "bold",
@@ -142,16 +142,16 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
   btn: {
-    backgroundColor: "white",
+    backgroundColor: "#5DBB63",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
     paddingBottom: "2%",
-    borderRadius: 2,
+    borderRadius: 100,
     marginBottom: "10%",
   },
   btn2: {
-    backgroundColor: "#B2BEB5",
+    backgroundColor: "#5DBB63",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",

@@ -60,9 +60,9 @@ function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
-        <Image style={styles.img} source={require("../assets/signers.jpg")} />
+        <Image style={styles.img} source={require("../assets/signers.png")} />
       </View>
-      <View style={{ alignItems: "flex-end" }}>
+      <View style={{ alignItems: "center" }}>
         <Text style={styles.ttext}>Signers</Text>
         <Text style={styles.ttext}>Academy</Text>
       </View>
@@ -132,7 +132,7 @@ function Login({ navigation }) {
         </Modal>
 
         <TextInput
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Email'
           value={email}
@@ -142,7 +142,7 @@ function Login({ navigation }) {
           style={styles.textInput}></TextInput>
         <TextInput
           secureTextEntry={true}
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Password'
           value={password}
@@ -195,7 +195,7 @@ function Login({ navigation }) {
         }}
       />
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <Text style={{ color: "white", fontSize: 12 }}>
+        <Text style={{ color: "black", fontSize: 12 }}>
           Don't have an account?{" "}
         </Text>
         <Text
@@ -212,15 +212,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "15%",
     paddingLeft: "5%",
     paddingRight: "5%",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
+    fontSize: 20,
+    fontWeight: 'bold',
+
   },
   banner: {
     flexDirection: "column",
@@ -232,31 +235,32 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   textInput: {
-    backgroundColor: "black",
+    backgroundColor: "white",
+    color: "black",
     width: "70%",
     marginBottom: "5%",
   },
   btn: {
-    backgroundColor: "#FF3131",
+    backgroundColor: "#5DBB63",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
     paddingBottom: "2%",
-    borderRadius: 2,
+    borderRadius: 100,
     marginBottom: "5%",
   },
   btn2: {
-    backgroundColor: "#B2BEB5",
+    backgroundColor: "#24743F",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
     paddingBottom: "2%",
-    borderRadius: 2,
+    borderRadius: 100,
     marginBottom: "5%",
   },
   modalstyle: {
     margin: "4%",
-    backgroundColor: "black",
+    backgroundColor: "white",
     borderWidth: 2,
     borderColor: "#B2BEB5",
     borderRadius: 20,

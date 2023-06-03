@@ -55,7 +55,7 @@ function Dictionary({ navigation }) {
           <Icon
             style={styles.icon}
             name='keyboard-backspace'
-            color='white'
+            color='#5DBB63'
             size={30}
             type='material'
           />
@@ -172,14 +172,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
     fontSize: 25,
     fontWeight: "bold",
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
   btn2: {
-    backgroundColor: "#B2BEB5",
+    backgroundColor: "#5DBB63",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
   item: {
-    color: "#f9c2ff",
+    color: "#5DBB63",
     padding: 20,
     marginVertical: 8,
   },

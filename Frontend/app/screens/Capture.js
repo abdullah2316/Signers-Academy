@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
-    backgroundColor: "black",
+    backgroundColor: "#5DBB63",
 
     marginTop: "150%",
   },
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: "red",
+    backgroundColor: "white",
   },
 });

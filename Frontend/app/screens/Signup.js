@@ -99,17 +99,17 @@ function Signup({ navigation }) {
   // }
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "flex-end" }}>
+      <View style={{ alignItems: "center" }}>
         <Text style={styles.ttext}>Signers</Text>
         <Text style={styles.ttext}>Academy</Text>
       </View>
 
       <View style={styles.banner}>
-        <Image style={styles.img} source={require("../assets/signers.jpg")} />
+        <Image style={styles.img} source={require("../assets/signers.png")} />
       </View>
       <Text
         style={{
-          color: "white",
+          color: "black",
           fontSize: 20,
           fontWeight: "bold",
           textAlign: "center",
@@ -121,7 +121,7 @@ function Signup({ navigation }) {
 
       <View style={styles.banner}>
         <TextInput
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Username'
           activeOutlineColor='#FF3131'
@@ -131,7 +131,7 @@ function Signup({ navigation }) {
           style={styles.textInput}></TextInput>
         <TextInput
           secureTextEntry={true}
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Password'
           value={password}
@@ -140,7 +140,7 @@ function Signup({ navigation }) {
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
         <TextInput
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Email'
           value={email}
@@ -149,7 +149,7 @@ function Signup({ navigation }) {
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
         <TextInput
-          textColor='white'
+          textColor='black'
           mode='outlined'
           label='Contact'
           value={contact}
@@ -172,7 +172,7 @@ function Signup({ navigation }) {
         }}
       />
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <Text style={{ color: "white", fontSize: 12 }}>
+        <Text style={{ color: "black", fontSize: 12 }}>
           Already have an account?{" "}
         </Text>
         <Text
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
 
     justifyContent: "space-between",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "15%",
     paddingLeft: "5%",
@@ -203,17 +203,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textInput: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     width: "70%",
     marginBottom: "5%",
   },
   btn: {
-    backgroundColor: "#FF3131",
+    backgroundColor: "#5DBB63",
     width: "70%",
     alignItems: "center",
     paddingTop: "2%",
     paddingBottom: "2%",
-    borderRadius: 2,
+    borderRadius: 100,
   },
   img: {
     width: "70%",
@@ -221,9 +221,11 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
-  },
+    fontWeight: "bold",
+    fontSize: 20,
+    },
 });
 
 export default Signup;
