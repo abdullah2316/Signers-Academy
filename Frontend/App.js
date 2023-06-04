@@ -53,7 +53,7 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name='login' component={MyMenu} />
+          <Stack.Screen name='login' component={Login} />
           <Stack.Screen name='signup' component={Signup} />
           <Stack.Screen name='menu' component={MyMenu} />
           <Stack.Screen name='favorites' component={Favorites} />
