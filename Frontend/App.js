@@ -19,6 +19,7 @@ import Capture from "./app/screens/Capture.js";
 import Display from "./app/screens/DisplayImg.js";
 import Dictionary from "./app/screens/Dictionary.js";
 import AddWord from "./app/screens/AddWord.js";
+import AdminMenu from "./app/screens/AdminMenu.js";
 import Otp from "./app/screens/otp.js";
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -34,7 +35,7 @@ export default function App() {
       console.log(token);
       if (Boolean(token)) {
         console.log("ououo");
-        setStartpage("menu");
+        setStartpage("adminmenu");
         console.log(startpage);
       } else {
         console.log("nop");
@@ -45,27 +46,32 @@ export default function App() {
   }, [startpage]);
   return (
     <>
-    {startpage && (
-      <><SafeAreaView style={styles.safe}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={startpage}
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name='login' component={Login} />
-          <Stack.Screen name='signup' component={Signup} />
-          <Stack.Screen name='menu' component={MyMenu} />
-          <Stack.Screen name='favorites' component={Favorites} />
-          <Stack.Screen name='recent' component={Recent} />
-          <Stack.Screen name='capture' component={Capture} />
-          <Stack.Screen name='display' component={Display} />
-          <Stack.Screen name='player' component={PSLPlayer} />
-          <Stack.Screen name='dictionary' component={Dictionary} />
-          <Stack.Screen name='otp' component={Otp} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView></>)}
+      {startpage && (
+        <>
+          <SafeAreaView style={styles.safe}>
+            <NavigationContainer>
+              <Stack.Navigator
+                initialRouteName={startpage}
+                screenOptions={{
+                  headerShown: false,
+                }}>
+                <Stack.Screen name='login' component={Login} />
+                <Stack.Screen name='signup' component={Signup} />
+                <Stack.Screen name='menu' component={MyMenu} />
+                <Stack.Screen name='favorites' component={Favorites} />
+                <Stack.Screen name='recent' component={Recent} />
+                <Stack.Screen name='capture' component={Capture} />
+                <Stack.Screen name='display' component={Display} />
+                <Stack.Screen name='player' component={PSLPlayer} />
+                <Stack.Screen name='dictionary' component={Dictionary} />
+                <Stack.Screen name='otp' component={Otp} />
+                <Stack.Screen name='addword' component={AddWord} />
+                <Stack.Screen name='adminmenu' component={AdminMenu} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </SafeAreaView>
+        </>
+      )}
     </>
   );
 }

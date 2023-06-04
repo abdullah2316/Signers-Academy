@@ -29,7 +29,7 @@ function Recents({ navigation }) {
           <Icon
             style={styles.icon}
             name='keyboard-backspace'
-            color='white'
+            color='#5DBB63'
             size={30}
             type='material'
           />
@@ -42,7 +42,7 @@ function Recents({ navigation }) {
         <Icon
           style={{ marginLeft: "5%", marginTop: "12%" }}
           name='history'
-          color='white'
+          color='black'
           size={30}
           type='material'
         />
@@ -70,7 +70,7 @@ function Recents({ navigation }) {
                   }}>
                   <Text
                     style={{
-                      color: "white",
+                      color: "black",
                       letterSpacing: 0.2,
                       fontSize: 15,
                     }}>
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
     fontSize: 25,
     fontWeight: "bold",

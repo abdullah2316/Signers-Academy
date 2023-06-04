@@ -10,6 +10,7 @@ const authRoute = require("./routes/auth");
 const dictionaryRoute = require("./routes/dictionary");
 const favouriteRoute = require("./routes/favourite");
 const recentRoute = require("./routes/recent");
+const adminRoute = require("./routes/admin");
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use("/user", userRoute);
 app.use("/dictionary", dictionaryRoute);
 app.use("/favourite", favouriteRoute);
 app.use("/recent", recentRoute);
+app.use("/admin", adminRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -43,7 +43,7 @@ function Favorites({ navigation }) {
           <Icon
             style={styles.icon}
             name='keyboard-backspace'
-            color='white'
+            color='#5DBB63'
             size={30}
             type='material'
           />
@@ -77,7 +77,7 @@ function Favorites({ navigation }) {
                   }}>
                   <Text
                     style={{
-                      color: "white",
+                      color: "black",
                       letterSpacing: 0.2,
                       fontSize: 15,
                     }}>
@@ -87,7 +87,7 @@ function Favorites({ navigation }) {
                     <Icon
                       style={styles.icon}
                       name='favorite'
-                      color='red'
+                      color='#5DBB63'
                       size={30}
                       type='material'
                     />
@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "black",
+    backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
   },
   ttext: {
-    color: "white",
+    color: "black",
     letterSpacing: 0.2,
     fontSize: 25,
     fontWeight: "bold",

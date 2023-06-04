@@ -9,7 +9,7 @@ import {
   MenuOption,
   MenuTrigger,
 } from "react-native-popup-menu";
-function MyMenu({ navigation, route }) {
+function AdminMenu({ navigation, route }) {
   const [hasToken, setHasToken] = React.useState(false);
   React.useEffect(() => {
     async function checkKey() {
@@ -72,39 +72,36 @@ function MyMenu({ navigation, route }) {
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <Pressable
             style={styles.btn}
-            onPress={() => navigation.navigate("capture")}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>Capture</Text>
+            onPress={() => navigation.navigate("addword")}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>Add Word</Text>
           </Pressable>
           <Pressable
             style={styles.btn}
-            onPress={() => navigation.navigate("dictionary")}>
+            onPress={() => navigation.navigate("Delete Word")}>
             <Text style={{ color: "white", letterSpacing: 0.2 }}>
-              Dictionary
+              Delete Word
             </Text>
           </Pressable>
-          {hasToken && (
-            <>
-              <Pressable
-                onPress={() => navigation.navigate("favorites")}
-                style={styles.btn}>
-                <Text style={{ color:"white", letterSpacing: 0.2 }}>
-                  Favorites
-                </Text>
-              </Pressable>
-              <Pressable
-                style={styles.btn}
-                onPress={() => navigation.navigate("recent")}>
-                <Text style={{ color: "white", letterSpacing: 0.2 }}>
-                  Recents
-                </Text>
-              </Pressable>
-              <Pressable style={styles.btn}>
-                <Text style={{ color: "white", letterSpacing: 0.2 }}>
-                  Suggested
-                </Text>
-              </Pressable>
-            </>
-          )}
+
+          <Pressable
+            onPress={() => navigation.navigate("Remove User")}
+            style={styles.btn}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>
+              Remove User
+            </Text>
+          </Pressable>
+          <Pressable
+            style={styles.btn}
+            onPress={() => navigation.navigate("View Users")}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>
+              View Users
+            </Text>
+          </Pressable>
+          <Pressable style={styles.btn}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>
+              View Dictionary
+            </Text>
+          </Pressable>
         </View>
       </View>
     </>
@@ -160,4 +157,4 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
 });
-export default MyMenu;
+export default AdminMenu;

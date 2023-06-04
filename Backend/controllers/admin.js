@@ -1,6 +1,7 @@
 var AdminModel = require("../models/admin");
-var DictionaryModel = require("../model/dictionary");
-var UserModel = require("../model/user");
+var DictionaryModel = require("../models/dictionary");
+var UserModel = require("../models/user");
+var UserModel = require("../models/user");
 
 module.exports = {
   getadmin: async function (req, res) {
@@ -17,14 +18,19 @@ module.exports = {
         });
       });
   },
-  addword: async function(req, res){
+  addword: async function (req, res) {
     const eng = req.body.name_eng;
     const urd = req.body.name_urdu;
     const vid = req.body.video_url;
-    DictionaryModel.insertOne({name_eng: eng, name_urdu : urd, video_url: vid })
-    .exec()
+    var dict = new DictionaryModel({
+      name_eng: eng,
+      name_urdu: urd,
+      video_url: vid,
+    });
+    dict
+      .save()
       .then(() => {
-        return res.json(dictionaries);
+        return res.json(dict);
       })
       .catch((err) => {
         return res.status(500).json({
@@ -33,10 +39,10 @@ module.exports = {
         });
       });
   },
-  removeword: async function(req, res){
+  removeword: async function (req, res) {
     const word_id = req.did;
-    DictionaryModel.deleteOne({_id : word_id})
-    .exec()
+    DictionaryModel.deleteOne({ _id: word_id })
+      .exec()
       .then(() => {
         return res.json(dictionaries);
       })
@@ -46,10 +52,9 @@ module.exports = {
           error: err,
         });
       });
-  }
-  ,
-  updateword: async function(req, res){
-    const ObjectId = require('mongodb').ObjectId;
+  },
+  updateword: async function (req, res) {
+    const ObjectId = require("mongodb").ObjectId;
     const id = new ObjectId(req.id); // replace with your object id
     const obj = await collection.findOne({ _id: id });
 
@@ -75,10 +80,10 @@ module.exports = {
         });
       });
   },
-  removeuser: async function(req, res){
+  removeuser: async function (req, res) {
     const user_id = req.uid;
-    UserModel.deleteOne({_id : user_id})
-    .exec()
+    UserModel.deleteOne({ _id: user_id })
+      .exec()
       .then(() => {
         return res.json(user);
       })
@@ -88,5 +93,5 @@ module.exports = {
           error: err,
         });
       });
-  }
+  },
 };

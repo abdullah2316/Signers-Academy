@@ -8,6 +8,7 @@ import {
   Pressable,
   Alert,
   Modal,
+  Switch,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { TextInput } from "react-native-paper";
@@ -19,7 +20,8 @@ function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const Userlogin = async () => {
     if (!email.trim() || !password.trim()) {
       Alert.alert("Empty field", "All fields are required!", [
@@ -30,10 +32,19 @@ function Login({ navigation }) {
     }
     try {
       console.log(email);
-      const response = await axios.post(`${API_BASE_URL}/auth/login/`, {
-        email: email,
-        password: password,
-      });
+
+      var response;
+      if (isEnabled) {
+        response = await axios.post(`${API_BASE_URL}/auth/alogin/`, {
+          email: email,
+          password: password,
+        });
+      } else {
+        response = await axios.post(`${API_BASE_URL}/auth/login/`, {
+          email: email,
+          password: password,
+        });
+      }
 
       console.log(response.data.token);
       await SecureStore.setItemAsync("token", response.data.token);
@@ -43,16 +54,23 @@ function Login({ navigation }) {
           onPress: () => {
             setEmail("");
             setPassword("");
-
-            navigation.navigate("menu");
+            isEnabled
+              ? navigation.navigate("adminmenu")
+              : navigation.navigate("menu");
           },
         },
       ]);
       // handle successful login here
 
-      navigation.navigate("menu");
+      // navigation.navigate("menu");
     } catch (error) {
+      Alert.alert("Login Failed", "Invalid Username/Password", [
+        {
+          text: "OK",
+        },
+      ]);
       console.log(error);
+
       // handle login error here
     }
   };
@@ -116,12 +134,12 @@ function Login({ navigation }) {
               </Pressable>
               <Text style={styles.ttext}>Enter Email to receive an OTP</Text>
               <TextInput
-                textColor='white'
+                textColor='black'
                 mode='outlined'
                 label='Email'
                 value={email}
                 onChangeText={setEmail}
-                activeOutlineColor='#FF3131'
+                activeOutlineColor='#5DBB63'
                 outlineColor='#899499'
                 style={styles.textInput}></TextInput>
               <Pressable style={styles.btn}>
@@ -137,7 +155,7 @@ function Login({ navigation }) {
           label='Email'
           value={email}
           onChangeText={setEmail}
-          activeOutlineColor='#FF3131'
+          activeOutlineColor='#5DBB63'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
         <TextInput
@@ -147,7 +165,7 @@ function Login({ navigation }) {
           label='Password'
           value={password}
           onChangeText={setPassword}
-          activeOutlineColor='#FF3131'
+          activeOutlineColor='#5DBB63'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
 
@@ -165,6 +183,24 @@ function Login({ navigation }) {
             Forgot password?
           </Text>
         </Pressable>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              paddingTop: "5%",
+              color: "#7393B3",
+              fontWeight: "bold",
+              fontSize: 14,
+            }}>
+            Admin
+          </Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#5DBB63" }}
+            thumbColor={isEnabled ? "#5DBB63" : "#f4f3f4"}
+            ios_backgroundColor='#3e3e3e'
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
       </View>
 
       <Text
@@ -222,8 +258,7 @@ const styles = StyleSheet.create({
     color: "black",
     letterSpacing: 0.2,
     fontSize: 20,
-    fontWeight: 'bold',
-
+    fontWeight: "bold",
   },
   banner: {
     flexDirection: "column",
