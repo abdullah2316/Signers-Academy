@@ -70,38 +70,22 @@ function AdminMenu({ navigation, route }) {
         </View>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          
           <Pressable
-            style={styles.btn}
-            onPress={() => navigation.navigate("addword")}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>Add Word</Text>
+            onPress={() => navigation.navigate("managedict")}
+            style={styles.btn}>
+            <Text style={{ color: "white", letterSpacing: 0.2 }}>
+              Manage Dictionary
+            </Text>
           </Pressable>
           <Pressable
             style={styles.btn}
-            onPress={() => navigation.navigate("Delete Word")}>
+            onPress={() => navigation.navigate("manageusers")}>
             <Text style={{ color: "white", letterSpacing: 0.2 }}>
-              Delete Word
+              Manage Users
             </Text>
           </Pressable>
 
-          <Pressable
-            onPress={() => navigation.navigate("Remove User")}
-            style={styles.btn}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>
-              Remove User
-            </Text>
-          </Pressable>
-          <Pressable
-            style={styles.btn}
-            onPress={() => navigation.navigate("View Users")}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>
-              View Users
-            </Text>
-          </Pressable>
-          <Pressable style={styles.btn}>
-            <Text style={{ color: "white", letterSpacing: 0.2 }}>
-              View Dictionary
-            </Text>
-          </Pressable>
         </View>
       </View>
     </>

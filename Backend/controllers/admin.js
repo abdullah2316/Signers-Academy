@@ -1,7 +1,6 @@
 var AdminModel = require("../models/admin");
 var DictionaryModel = require("../models/dictionary");
 var UserModel = require("../models/user");
-var UserModel = require("../models/user");
 
 module.exports = {
   getadmin: async function (req, res) {
@@ -40,31 +39,50 @@ module.exports = {
       });
   },
   removeword: async function (req, res) {
-    const word_id = req.did;
-    DictionaryModel.deleteOne({ _id: word_id })
-      .exec()
-      .then(() => {
-        return res.json(dictionaries);
+    const id = req.params.id; // Assuming the object ID is passed as a parameter
+    // Find the document by ID and update its properties
+    DictionaryModel.findByIdAndDelete(id)
+      .then((updatedDict) => {
+        if (!updatedDict) {
+          return res.status(404).json({
+            message: "Word not found",
+          });
+        }
+        return res.json(updatedDict);
       })
       .catch((err) => {
         return res.status(500).json({
-          message: "failed to delete word",
+          message: "Failed to delete word",
           error: err,
         });
       });
   },
   updateword: async function (req, res) {
-    const ObjectId = require("mongodb").ObjectId;
-    const id = new ObjectId(req.id); // replace with your object id
-    const obj = await collection.findOne({ _id: id });
-
-    // Modify the object properties
-    obj.name_eng = req.body.name_eng;
-    obj.name_urdu = req.body.name_urdu;
-    obj.video_url = req.body.video_url;
-
-    // Save the changes to the database
-    await obj.save();
+    const eng = req.body.name_eng;
+    const urd = req.body.name_urdu;
+    const vid = req.body.video_url;
+    const id = req.params.id; // Assuming the object ID is passed as a parameter
+    // Find the document by ID and update its properties
+    DictionaryModel.findByIdAndUpdate(
+      id,
+      { name_eng: eng, name_urdu: urd, video_url: vid },
+      { new: true } // This option returns the updated document
+    )
+      .then((updatedDict) => {
+        if (!updatedDict) {
+          return res.status(404).json({
+            message: "Word not found",
+          });
+        }
+        return res.json(updatedDict);
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          message: "Failed to update word",
+          error: err,
+        });
+      });
+    
   },
   getusers: async function (req, res) {
     const query = UserModel.find();
@@ -81,15 +99,20 @@ module.exports = {
       });
   },
   removeuser: async function (req, res) {
-    const user_id = req.uid;
-    UserModel.deleteOne({ _id: user_id })
-      .exec()
-      .then(() => {
-        return res.json(user);
+    const id = req.params.id; // Assuming the object ID is passed as a parameter
+    // Find the document by ID and update its properties
+    UserModel.findByIdAndDelete(id)
+      .then((updatedDict) => {
+        if (!updatedDict) {
+          return res.status(404).json({
+            message: "User not found",
+          });
+        }
+        return res.json(updatedDict);
       })
       .catch((err) => {
         return res.status(500).json({
-          message: "failed to delete user",
+          message: "Failed to delete user",
           error: err,
         });
       });

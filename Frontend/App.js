@@ -21,6 +21,10 @@ import Dictionary from "./app/screens/Dictionary.js";
 import AddWord from "./app/screens/AddWord.js";
 import AdminMenu from "./app/screens/AdminMenu.js";
 import Otp from "./app/screens/otp.js";
+import UpdateWord from "./app/screens/updateWord.js";
+import ManageDict from "./app/screens/ManageDict.js";
+import ManageUsers from "./app/screens/ManageUsers.js";
+
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -66,7 +70,10 @@ export default function App() {
                 <Stack.Screen name='dictionary' component={Dictionary} />
                 <Stack.Screen name='otp' component={Otp} />
                 <Stack.Screen name='addword' component={AddWord} />
+                <Stack.Screen name='update' component={UpdateWord} />
                 <Stack.Screen name='adminmenu' component={AdminMenu} />
+                <Stack.Screen name='managedict' component={ManageDict} />
+                <Stack.Screen name='manageusers' component={ManageUsers} />
               </Stack.Navigator>
             </NavigationContainer>
           </SafeAreaView>

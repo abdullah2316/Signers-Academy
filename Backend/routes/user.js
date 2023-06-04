@@ -9,5 +9,5 @@ router.post("/getotp", userController.getOTP);
 router.post("/verifyotp", userController.verifyOTP);
 router.post("/setpassword", userController.setpassword);
 router.post("/resetpassword", auth, userController.resetpassword);
-
+router.get("/all", userController.getall);
 module.exports = router;

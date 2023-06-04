@@ -4,6 +4,40 @@ const speakeasy = require("speakeasy");
 const bcrypt = require("bcrypt");
 module.exports = {
   //register function
+  getall: async function (req, res) {
+    const query = UserModel.find().sort("name");
+    query
+      .exec()
+      .then((docs) => {
+        let allDocs = [];
+        let currAlphabet = "a";
+        let words = [];
+        for (const doc of docs) {
+          if (doc.name[0].toLocaleLowerCase() !== currAlphabet) {
+            allDocs.push({
+              title: currAlphabet,
+              data: words,
+            });
+            currAlphabet = doc.name[0].toLocaleLowerCase();
+            words = [];
+          }
+          words.push({
+            name: doc.name.toLocaleLowerCase(),
+            email: doc.email,
+            id: doc._id,
+          });
+        }
+        return res.json({
+          data: allDocs,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          message: "retrieval error",
+          error: err,
+        });
+      });
+  },
   getuser: async function (req, res) {
     const user_id = req.user.id;
     UserModel.findOne({ _id: user_id })
