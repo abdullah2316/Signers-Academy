@@ -19,7 +19,7 @@ import Capture from "./app/screens/Capture.js";
 import Display from "./app/screens/DisplayImg.js";
 import Dictionary from "./app/screens/Dictionary.js";
 import AddWord from "./app/screens/AddWord.js";
-import otp from "./app/screens/otp.js";
+import Otp from "./app/screens/otp.js";
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -62,7 +62,7 @@ export default function App() {
           <Stack.Screen name='display' component={Display} />
           <Stack.Screen name='player' component={PSLPlayer} />
           <Stack.Screen name='dictionary' component={Dictionary} />
-          <Stack.Screen name='otp' component={otp} />
+          <Stack.Screen name='otp' component={Otp} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView></>)}

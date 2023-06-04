@@ -11,7 +11,7 @@ import { Searchbar } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import { recents_list } from "./Dummydata.js";
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from "../../config";
 
 function Dictionary({ navigation }) {
   const sectionListRef = useRef(null);
@@ -25,12 +25,12 @@ function Dictionary({ navigation }) {
     async function searchDict() {
       console.log("val:", searchQuery);
       if (searchQuery == "") {
-        const response = await axios.get(`${ API_BASE_URL }/dictionary/all`);
+        const response = await axios.get(`${API_BASE_URL}/dictionary/all`);
         setData(response.data.data);
         setFlag(false);
       } else {
         const response = await axios.get(
-          `${ API_BASE_URL }/dictionary/search?term=${searchQuery}`
+          `${API_BASE_URL}/dictionary/search?term=${searchQuery}`
         );
         setSearchRes(response.data);
         setFlag(true);
@@ -87,7 +87,7 @@ function Dictionary({ navigation }) {
               <>
                 <View
                   style={{
-                    borderBottomColor: "grey",
+                    borderBottomColor: "#5DBB63",
                     borderBottomWidth: StyleSheet.hairlineWidth,
                   }}
                 />
@@ -103,7 +103,7 @@ function Dictionary({ navigation }) {
                   }}>
                   <Text
                     style={{
-                      color: "white",
+                      color: "black",
                       letterSpacing: 0.2,
                       fontSize: 15,
                     }}>
@@ -115,7 +115,7 @@ function Dictionary({ navigation }) {
           </ScrollView>
           <View
             style={{
-              borderBottomColor: "grey",
+              borderBottomColor: "#5DBB63",
               borderBottomWidth: StyleSheet.hairlineWidth,
             }}
           />
@@ -143,11 +143,11 @@ function Dictionary({ navigation }) {
                     id: item.id,
                   });
                 }}>
-                <Text style={{ color: "white" }}>{item.eng_word}</Text>
+                <Text style={{ color: "black" }}>{item.eng_word}</Text>
               </Pressable>
             )}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={{ color: "#FF3131", fontSize: 20 }}>
+              <Text style={{ color: "#5DBB63", fontSize: 20 }}>
                 {title.toUpperCase()}
               </Text>
             )}
@@ -157,7 +157,7 @@ function Dictionary({ navigation }) {
               <Pressable
                 key={index}
                 onPress={() => scrollToSectionHeader(index)}>
-                <Text style={{ color: "white", fontSize: 12 }}>
+                <Text style={{ color: "black", fontSize: 12 }}>
                   {item.title.toUpperCase()}
                 </Text>
               </Pressable>

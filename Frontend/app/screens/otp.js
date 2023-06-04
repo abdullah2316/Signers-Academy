@@ -6,7 +6,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { API_BASE_URL } from "../../config";
 
-function otp() {
+function Otp() {
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
 });
-export default otp;
+export default Otp;
