@@ -28,7 +28,7 @@ function DisplayImg({ route, navigation }) {
     try {
       setProcessing(true);
       const response = await axios.post(
-        "http://172.20.10.3:5001/predict",
+        "http://192.168.1.12:5001/predict",
         formData,
         {
           headers: {

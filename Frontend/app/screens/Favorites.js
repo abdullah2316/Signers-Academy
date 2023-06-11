@@ -18,8 +18,7 @@ function Favorites({ navigation }) {
         },
       }
     );
-
-    setItems(items);
+    setItems((prevData) => prevData.filter((item) => item.id !== wid));
   }
 
   useEffect(() => {
@@ -34,7 +33,7 @@ function Favorites({ navigation }) {
       setItems(response.data);
     }
     getFavs();
-  }, [items]);
+  }, []);
 
   return (
     <View style={styles.container}>

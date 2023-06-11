@@ -5,7 +5,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { API_BASE_URL } from "../../config";
 import { items_list } from "./Dummydata.js";
-function Recents({ navigation }) {
+function Suggestion({ navigation }) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -17,9 +17,22 @@ function Recents({ navigation }) {
           Authorization: "Bearer " + token,
         },
       });
-      console.log(response, " response");
+      console.log(response.data, " response");
+      const jsonData = JSON.stringify(response.data);
+      console.log(jsonData, " jsondata");
 
-      setItems(response.data);
+      const response2 = await axios.post(
+        "http://192.168.1.12:5001/suggestions",
+        jsonData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response2.data.data, "response 2");
+      setItems(response2.data.data);
     }
     getRec();
   }, []);
@@ -39,7 +52,7 @@ function Recents({ navigation }) {
       </View>
       <View style={{ paddingBottom: "10%", flexDirection: "row" }}>
         <Text style={styles.ttext} textCenter>
-          Recents
+          Suggestions
         </Text>
         <Icon
           style={{ marginLeft: "5%", marginTop: "12%" }}
@@ -76,7 +89,7 @@ function Recents({ navigation }) {
                       letterSpacing: 0.2,
                       fontSize: 15,
                     }}>
-                    {item.name_eng}
+                    {item}
                   </Text>
                 </Pressable>
               </>
@@ -142,4 +155,4 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
 });
-export default Recents;
+export default Suggestion;

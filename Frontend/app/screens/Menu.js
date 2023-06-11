@@ -21,6 +21,7 @@ function MyMenu({ navigation, route }) {
 
   async function logout() {
     try {
+      await SecureStore.deleteItemAsync("admin");
       await SecureStore.deleteItemAsync("token");
       setHasToken(false);
       console.log(`Key  removed from secure store`);
@@ -59,6 +60,27 @@ function MyMenu({ navigation, route }) {
             </Menu>
           </MenuProvider>
         )}
+        {!hasToken && (
+          <MenuProvider>
+            <Menu>
+              <MenuTrigger>
+                <View>
+                  <Icon
+                    style={{ alignSelf: "flex-end" }}
+                    name='dots-three-vertical'
+                    size={20}
+                    color='black'
+                  />
+                </View>
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption onSelect={() => navigation.navigate("login")}>
+                  <Text>Login</Text>
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
+          </MenuProvider>
+        )}
       </View>
       <View style={styles.container}>
         <View style={styles.banner}>
@@ -87,7 +109,7 @@ function MyMenu({ navigation, route }) {
               <Pressable
                 onPress={() => navigation.navigate("favorites")}
                 style={styles.btn}>
-                <Text style={{ color:"white", letterSpacing: 0.2 }}>
+                <Text style={{ color: "white", letterSpacing: 0.2 }}>
                   Favorites
                 </Text>
               </Pressable>
@@ -98,7 +120,9 @@ function MyMenu({ navigation, route }) {
                   Recents
                 </Text>
               </Pressable>
-              <Pressable style={styles.btn}>
+              <Pressable
+                onPress={() => navigation.navigate("suggestions")}
+                style={styles.btn}>
                 <Text style={{ color: "white", letterSpacing: 0.2 }}>
                   Suggested
                 </Text>

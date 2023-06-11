@@ -23,12 +23,12 @@ function ManageDict({ navigation }) {
 
   const HandleDelete = async (id) => {
     try {
-      const res = await axios.post(`${API_BASE_URL}/admin/removeword/${id}`)
-      console.log('Word successfully deleted.')
+      const res = await axios.post(`${API_BASE_URL}/admin/removeword/${id}`);
+      console.log("Word successfully deleted.");
     } catch (error) {
-      alert(error)
+      alert(error);
     }
-  }
+  };
   useEffect(() => {
     async function searchDict() {
       console.log("val:", searchQuery);
@@ -87,7 +87,7 @@ function ManageDict({ navigation }) {
         <Icon
           style={{ marginLeft: "5%", marginTop: "12%" }}
           name='article'
-          color='white'
+          color='green'
           size={30}
           type='material'
         />
@@ -106,38 +106,65 @@ function ManageDict({ navigation }) {
               <>
                 <View
                   style={{
-                    borderBottomColor: "#5DBB63",
+                    borderBottomColor: "grey",
                     borderBottomWidth: StyleSheet.hairlineWidth,
                   }}
-                />   
-                  <Text
-                    style={{
-                      color: "black",
-                      letterSpacing: 0.2,
-                      fontSize: 15,
-                    }}>
-                    {item.name_eng}
-                  </Text>
+                />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingRight: "4%",
+                  }}>
                   <Pressable
-                  style={styles.btn2}
-                  onPress={() => navigation.navigate("update", {id: item._id,})}>
-                  <Text style={{ color: "white", letterSpacing: 0.2 }}>
-                    Update Word
-                  </Text>
-        </Pressable>
-        <Pressable
-                  style={styles.btn2}
-                  onPress={HandleDelete(item._id)}>
-                  <Text style={{ color: "white", letterSpacing: 0.2 }}>
-                    Delete Word
-                  </Text>
-        </Pressable>
+                    style={styles.item}
+                    onPress={() => {
+                      navigation.navigate("player", {
+                        path: item.video_url,
+                        name: item.name_eng,
+                        urdu: item.name_urdu,
+                        id: item._id,
+                      });
+                    }}>
+                    <Text style={{ color: "black", fontSize: 18 }}>
+                      {item.name_eng}
+                    </Text>
+                  </Pressable>
+                  <View style={{ flexDirection: "row", paddingTop: "8%" }}>
+                    <Pressable
+                      onPress={() => {
+                        navigation.navigate("update", {
+                          id: item._id,
+                          name_eng: item.name_eng,
+                          name_urdu: item.name_urdu,
+                          video_url: item.video_url,
+                        });
+                      }}>
+                      <Icon
+                        style={styles.icon}
+                        name='edit'
+                        color='#5DBB63'
+                        size={30}
+                        type='material'
+                      />
+                    </Pressable>
+                    <Pressable onPress={() => HandleDelete(item._id)}>
+                      <Icon
+                        style={styles.icon}
+                        name='delete'
+                        color='#5DBB63'
+                        size={30}
+                        type='material'
+                      />
+                    </Pressable>
+                  </View>
+                </View>
               </>
             ))}
           </ScrollView>
           <View
             style={{
-              borderBottomColor: "#5DBB63",
+              borderBottomColor: "grey",
               borderBottomWidth: StyleSheet.hairlineWidth,
             }}
           />
@@ -155,21 +182,68 @@ function ManageDict({ navigation }) {
               );
             }}
             renderItem={({ item }) => (
-              <Pressable
-                style={styles.item}
-                onPress={() => {
-                  navigation.navigate("player", {
-                    path: item.link,
-                    name: item.eng_word,
-                    urdu: item.urdu_word,
-                    id: item.id,
-                  });
-                }}>
-                <Text style={{ color: "black" }}>{item.eng_word}</Text>
-              </Pressable>
+              <>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingRight: "4%",
+                  }}>
+                  <Pressable
+                    style={styles.item}
+                    onPress={() => {
+                      navigation.navigate("player", {
+                        path: item.link,
+                        name: item.eng_word,
+                        urdu: item.urdu_word,
+                        id: item.id,
+                      });
+                    }}>
+                    <Text style={{ color: "black", fontSize: 18 }}>
+                      {item.eng_word}
+                    </Text>
+                  </Pressable>
+                  <View style={{ flexDirection: "row", paddingTop: "8%" }}>
+                    <Pressable
+                      onPress={() => {
+                        console.log("item:", item);
+                        navigation.navigate("update", {
+                          id: item.id,
+                          name_eng: item.eng_word,
+                          name_urdu: item.urdu_word,
+                          video_url: item.link,
+                        });
+                      }}>
+                      <Icon
+                        style={styles.icon}
+                        name='edit'
+                        color='#5DBB63'
+                        size={30}
+                        type='material'
+                      />
+                    </Pressable>
+                    <Pressable onPress={() => HandleDelete(item._id)}>
+                      <Icon
+                        style={styles.icon}
+                        name='delete'
+                        color='#5DBB63'
+                        size={30}
+                        type='material'
+                      />
+                    </Pressable>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    marginRight: "3%",
+                  }}
+                />
+              </>
             )}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={{ color: "#5DBB63", fontSize: 20 }}>
+              <Text style={{ color: "green", fontSize: 25 }}>
                 {title.toUpperCase()}
               </Text>
             )}
@@ -240,10 +314,18 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     marginBottom: "5%",
   },
+  btn3: {
+    backgroundColor: "#5DBB63",
+    alignItems: "center",
+    paddingTop: "2%",
+    paddingBottom: "2%",
+    borderRadius: 2,
+    marginBottom: "5%",
+  },
   item: {
     color: "#5DBB63",
     padding: 20,
-    marginVertical: 8,
+    marginVertical: 2,
   },
   header: {
     fontSize: 32,

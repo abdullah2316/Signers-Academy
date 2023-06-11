@@ -10,19 +10,9 @@ module.exports = {
       .exec()
       .then((docs) => {
         let allDocs = [];
-        let currAlphabet = "a";
-        let words = [];
         for (const doc of docs) {
-          if (doc.name[0].toLocaleLowerCase() !== currAlphabet) {
-            allDocs.push({
-              title: currAlphabet,
-              data: words,
-            });
-            currAlphabet = doc.name[0].toLocaleLowerCase();
-            words = [];
-          }
-          words.push({
-            name: doc.name.toLocaleLowerCase(),
+          allDocs.push({
+            name: doc.name,
             email: doc.email,
             id: doc._id,
           });
@@ -153,5 +143,4 @@ module.exports = {
       return res.status(500).json({ message: error });
     }
   },
- 
 };

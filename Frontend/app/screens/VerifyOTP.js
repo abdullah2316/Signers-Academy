@@ -16,30 +16,28 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { API_BASE_URL } from "../../config";
 
-function Login({ navigation }) {
-  const [email, setEmail] = useState("");
+function VerifyOTP({ navigation, route }) {
+  const [otp, setOTP] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const SendOTP = async () => {
     console.log("wtf");
-    if (!email.trim()) {
+    if (!otp.trim()) {
       Alert.alert("Empty field", "All fields are required!", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     }
     try {
-      const response = await axios.post(`${API_BASE_URL}/user/getotp/`, {
-        email: email,
+      console.log(route.params.em, "   email");
+      const response = await axios.post(`${API_BASE_URL}/user/verifyotp/`, {
+        email: route.params.em,
+        otp: otp,
       });
-      setEmail("");
-      setPassword("");
-      setModalVisible(false);
-      navigation.navigate("verify", { em: email });
+      setModalVisible(true);
+      //navigation.navigate("menu");
     } catch (error) {
-      Alert.alert("OTP Failed", "Invalid Email", [
+      Alert.alert("OTP verification Failed", "Invalid OTP", [
         {
           text: "OK",
         },
@@ -49,55 +47,58 @@ function Login({ navigation }) {
 
     return;
   };
-  const Userlogin = async () => {
-    if (!email.trim() || !password.trim()) {
-      Alert.alert("Empty field", "All fields are required!", [
+  const Reset = async () => {
+    if (!password.trim()) {
+      Alert.alert("Empty field", "Password can't be empty", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-
       return;
     }
     try {
-      console.log(email);
-
-      var response;
-      if (isEnabled) {
-        response = await axios.post(`${API_BASE_URL}/auth/alogin/`, {
-          email: email,
-          password: password,
-        });
-      } else {
-        response = await axios.post(`${API_BASE_URL}/auth/login/`, {
-          email: email,
-          password: password,
-        });
-      }
-      setEmail("");
+      const response = await axios.post(`${API_BASE_URL}/user/setpassword/`, {
+        email: route.params.em,
+        otp: otp,
+        password: password,
+      });
+      setOTP("");
       setPassword("");
-      console.log(response.data.token);
-      await SecureStore.setItemAsync("token", response.data.token);
-      if (isEnabled) await SecureStore.setItemAsync("admin", "admin");
-      else await SecureStore.setItemAsync("admin", "user");
-      isEnabled
-        ? navigation.navigate("adminmenu")
-        : navigation.navigate("menu");
+      setModalVisible(false);
+      Alert.alert(
+        "Success",
+        "Password changed successfully,Login to continue",
+        [
+          {
+            text: "OK",
+          },
+        ]
+      );
+      navigation.navigate("login");
     } catch (error) {
-      Alert.alert("Login Failed", "Invalid Username/Password", [
+      Alert.alert("Failed", "Couldnot Change Password", [
         {
           text: "OK",
         },
       ]);
       console.log(error);
-
-      // handle login error here
     }
-  };
 
+    return;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.banner}>
         <Image style={styles.img} source={require("../assets/signers.png")} />
       </View>
+      <Text
+        style={{
+          color: "white",
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+          letterSpacing: 0.2,
+        }}>
+        Hello Again!
+      </Text>
       <View style={{ alignItems: "center" }}>
         <Text style={styles.ttext}>Signers</Text>
         <Text style={styles.ttext}>Academy</Text>
@@ -121,7 +122,7 @@ function Login({ navigation }) {
             textAlign: "center",
             fontSize: 12,
           }}>
-          Sign in to continue
+          Enter your 5 digit OTP for verification
         </Text>
       </View>
       <View style={styles.banner}>
@@ -150,18 +151,19 @@ function Login({ navigation }) {
                   type='material'
                 />
               </Pressable>
-              <Text style={styles.ttext}>Enter Your Email to get OTP</Text>
+              <Text style={styles.ttext}>Enter New Password</Text>
               <TextInput
+                secureTextEntry={true}
                 textColor='black'
                 mode='outlined'
-                label='email'
-                value={email}
-                onChangeText={setEmail}
+                label='password'
+                value={password}
+                onChangeText={setPassword}
                 activeOutlineColor='#5DBB63'
                 outlineColor='#899499'
                 style={styles.textInput}></TextInput>
-              <Pressable onPress={() => SendOTP()} style={styles.btn}>
-                <Text>get OTP</Text>
+              <Pressable onPress={() => Reset()} style={styles.btn}>
+                <Text>Reset</Text>
               </Pressable>
             </View>
           </View>
@@ -170,93 +172,18 @@ function Login({ navigation }) {
         <TextInput
           textColor='black'
           mode='outlined'
-          label='Email'
-          value={email}
-          onChangeText={setEmail}
-          activeOutlineColor='#5DBB63'
-          outlineColor='#899499'
-          style={styles.textInput}></TextInput>
-        <TextInput
-          secureTextEntry={true}
-          textColor='black'
-          mode='outlined'
-          label='Password'
-          value={password}
-          onChangeText={setPassword}
+          label='OTP'
+          value={otp}
+          keyboardType='numeric'
+          onChangeText={setOTP}
           activeOutlineColor='#5DBB63'
           outlineColor='#899499'
           style={styles.textInput}></TextInput>
 
-        <Pressable style={styles.btn} onPress={Userlogin}>
+        <Pressable onPress={() => SendOTP()} style={styles.btn}>
           {/* onPress={() => navigation.navigate("menu")}> */}
-          <Text style={{ color: "white", letterSpacing: 0.2 }}>Log in</Text>
+          <Text style={{ color: "white", letterSpacing: 0.2 }}>Verify OTP</Text>
         </Pressable>
-        <Pressable onPress={() => setModalVisible(true)}>
-          <Text
-            style={{
-              color: "#7393B3",
-              fontWeight: "bold",
-              fontSize: 12,
-            }}>
-            Forgot password?
-          </Text>
-        </Pressable>
-        <View style={{ flexDirection: "row" }}>
-          <Text
-            style={{
-              paddingTop: "5%",
-              color: "#7393B3",
-              fontWeight: "bold",
-              fontSize: 14,
-            }}>
-            Admin
-          </Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#5DBB63" }}
-            thumbColor={isEnabled ? "#5DBB63" : "#f4f3f4"}
-            ios_backgroundColor='#3e3e3e'
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-        </View>
-      </View>
-
-      <Text
-        style={{
-          color: "white",
-
-          fontWeight: "bold",
-          textAlign: "center",
-          letterSpacing: 0.2,
-        }}>
-        or
-      </Text>
-
-      <View style={{ alignItems: "center" }}>
-        <Pressable
-          style={styles.btn2}
-          onPress={() => navigation.navigate("menu", {})}>
-          <Text style={{ color: "white", letterSpacing: 0.2 }}>
-            Continue as guest
-          </Text>
-        </Pressable>
-      </View>
-
-      <View
-        style={{
-          borderBottomColor: "grey",
-          borderBottomWidth: StyleSheet.hairlineWidth,
-        }}
-      />
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <Text style={{ color: "black", fontSize: 12 }}>
-          Don't have an account?{" "}
-        </Text>
-        <Text
-          style={{ color: "#7393B3", fontWeight: "bold", fontSize: 12 }}
-          onPress={() => navigation.navigate("signup")}>
-          Sign up
-        </Text>
       </View>
     </View>
   );
@@ -265,7 +192,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     backgroundColor: "white",
     paddingBottom: "10%",
     paddingTop: "15%",
@@ -334,4 +261,5 @@ const styles = StyleSheet.create({
     marginTop: "12%",
   },
 });
-export default Login;
+
+export default VerifyOTP;

@@ -5,13 +5,14 @@ import { TextInput } from "react-native-paper";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { API_BASE_URL } from "../../config";
-function UpdateWord({ navigation,route }) {
-  const [eng, setEng] = useState("");
-  const [urd, setUrd] = useState("");
-  const [url, setUrl] = useState("");
+function UpdateWord({ navigation, route }) {
+  const [eng, setEng] = useState(route.params.name_eng);
+  const [urd, setUrd] = useState(route.params.name_urdu);
+  const [url, setUrl] = useState(route.params.video_url);
 
   let id = route.params.id;
   const HandleUpdate = async () => {
+    console.log(typeof id, " id");
     if (!eng.trim() || !urd.trim() || !url.trim()) {
       Alert.alert("Empty field", "All fields are required!", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -21,11 +22,14 @@ function UpdateWord({ navigation,route }) {
     }
     try {
       console.log(url);
-      const response = await axios.post(`${API_BASE_URL}/admin/updateword/${id}`, {
-        name_eng: eng,
-        name_urdu: urd,
-        video_url: url,
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}/admin/updateword/${id}`,
+        {
+          name_eng: eng,
+          name_urdu: urd,
+          video_url: url,
+        }
+      );
 
       // console.log(response.data.token);
       // await SecureStore.setItemAsync("token", response.data.token);
@@ -46,7 +50,7 @@ function UpdateWord({ navigation,route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading} textCenter>
-       Update Word
+        Update Word
       </Text>
       <TextInput
         textColor='black'
@@ -77,8 +81,7 @@ function UpdateWord({ navigation,route }) {
         activeOutlineColor='#5DBB63'
         outlineColor='#899499'
         style={styles.textInput}></TextInput>
-      <Pressable style={styles.btn} onPress={HandleUpdate}>
-        {/* onPress={() => navigation.navigate("menu")}> */}
+      <Pressable style={styles.btn} onPress={() => HandleUpdate()}>
         <Text style={{ color: "white", letterSpacing: 0.2 }}>Update Word</Text>
       </Pressable>
     </View>

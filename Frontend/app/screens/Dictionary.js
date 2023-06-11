@@ -105,7 +105,7 @@ function Dictionary({ navigation }) {
                     style={{
                       color: "black",
                       letterSpacing: 0.2,
-                      fontSize: 15,
+                      fontSize: 18,
                     }}>
                     {item.name_eng}
                   </Text>
@@ -133,18 +133,28 @@ function Dictionary({ navigation }) {
               );
             }}
             renderItem={({ item }) => (
-              <Pressable
-                style={styles.item}
-                onPress={() => {
-                  navigation.navigate("player", {
-                    path: item.link,
-                    name: item.eng_word,
-                    urdu: item.urdu_word,
-                    id: item.id,
-                  });
-                }}>
-                <Text style={{ color: "black" }}>{item.eng_word}</Text>
-              </Pressable>
+              <View style={{ paddingRight: "3%" }}>
+                <Pressable
+                  style={styles.item}
+                  onPress={() => {
+                    navigation.navigate("player", {
+                      path: item.link,
+                      name: item.eng_word,
+                      urdu: item.urdu_word,
+                      id: item.id,
+                    });
+                  }}>
+                  <Text style={{ color: "black", fontSize: 18 }}>
+                    {item.eng_word}
+                  </Text>
+                </Pressable>
+                <View
+                  style={{
+                    borderBottomColor: "grey",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+              </View>
             )}
             renderSectionHeader={({ section: { title } }) => (
               <Text style={{ color: "#5DBB63", fontSize: 20 }}>
@@ -220,8 +230,8 @@ const styles = StyleSheet.create({
   },
   item: {
     color: "#5DBB63",
-    padding: 20,
-    marginVertical: 8,
+    padding: 8,
+    marginVertical: 2,
   },
   header: {
     fontSize: 32,

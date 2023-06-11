@@ -8,9 +8,11 @@ module.exports = {
     console.log(uid);
     try {
       const rec = await recModel.findOne({ user_id: uid });
+      console.log(typeof uid);
       if (rec) {
         let recents = [];
         for (const w of rec.words) {
+          console.log(w, " wordid");
           const dw = await dictModel.findById(w);
           recents.push({
             id: dw._id,

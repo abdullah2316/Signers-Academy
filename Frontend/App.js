@@ -24,6 +24,8 @@ import Otp from "./app/screens/otp.js";
 import UpdateWord from "./app/screens/updateWord.js";
 import ManageDict from "./app/screens/ManageDict.js";
 import ManageUsers from "./app/screens/ManageUsers.js";
+import Suggestion from "./app/screens/Suggestion.js";
+import VerifyOTP from "./app/screens/VerifyOTP.js";
 
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -74,6 +76,8 @@ export default function App() {
                 <Stack.Screen name='adminmenu' component={AdminMenu} />
                 <Stack.Screen name='managedict' component={ManageDict} />
                 <Stack.Screen name='manageusers' component={ManageUsers} />
+                <Stack.Screen name='suggestions' component={Suggestion} />
+                <Stack.Screen name='verify' component={VerifyOTP} />
               </Stack.Navigator>
             </NavigationContainer>
           </SafeAreaView>

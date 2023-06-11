@@ -5,46 +5,49 @@ import {
   View,
   ScrollView,
   Pressable,
-  SectionList,
+  Alert,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { Icon } from "react-native-elements";
 import axios from "axios";
-import { recents_list } from "./Dummydata.js";
 import { API_BASE_URL } from "../../config.js";
 
 function ManageUsers({ navigation }) {
-  const sectionListRef = useRef(null);
   const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchRes, setSearchRes] = useState([]);
-  const [flag, setFlag] = useState(false);
- 
-
   const HandleDelete = async (id) => {
-    try {
-      const res = await axios.post(`${API_BASE_URL}/admin/removeuser/${id}`)
-      console.log('User successfully deleted.')
-    } catch (error) {
-      alert(error)
-    }
-  }
+    Alert.alert(
+      "Confirmation",
+      "Are you sure you want to delete this user?",
+      [
+        { text: "Cancel" },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              const res = await axios.post(
+                `${API_BASE_URL}/admin/removeuser/${id}`
+              );
+              setData((prevData) => prevData.filter((item) => item.id !== id));
+
+              console.log("User successfully deleted.");
+            } catch (error) {
+              alert(error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   useEffect(() => {
     async function getUsers() {
-        const response = await axios.get(`${API_BASE_URL}/user/all`);
-        setData(response.data.data);
-        setFlag(false);
+      const response = await axios.get(`${API_BASE_URL}/user/all`);
+      console.log(response.data.data, " data");
+      setData(response.data.data);
     }
     getUsers();
-  }, [searchQuery]);
-  const scrollToSectionHeader = (sectionIndex) => {
-    sectionListRef.current?.scrollToLocation({
-      sectionIndex: sectionIndex,
-      itemIndex: 0,
-      viewPosition: 0,
-      animated: true,
-    });
-  };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -59,7 +62,7 @@ function ManageUsers({ navigation }) {
           />
         </Pressable>
       </View>
-      
+
       <View style={{ paddingBottom: "5%", flexDirection: "row" }}>
         <Text style={styles.ttext} textCenter>
           Manage Users
@@ -67,52 +70,68 @@ function ManageUsers({ navigation }) {
         <Icon
           style={{ marginLeft: "5%", marginTop: "12%" }}
           name='article'
-          color='white'
+          color='#5DBB63'
           size={30}
           type='material'
         />
       </View>
-      
-      
-        <View style={styles.banner}>
-          <ScrollView>
-            {(data ?? []).map((item, i) => (
-              <>
+
+      <View style={styles.banner}>
+        <ScrollView>
+          {(data ?? []).map((item, i) => (
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingRight: "4%",
+                  paddingVertical: "3%",
+                }}>
                 <View
                   style={{
-                    borderBottomColor: "#5DBB63",
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                  }}
-                />   
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}>
                   <Text
                     style={{
                       color: "black",
                       letterSpacing: 0.2,
-                      fontSize: 15,
+                      fontSize: 20,
                     }}>
+                    {console.log(item.name, " item")}
                     {item.name}
                   </Text>
-
-        <Pressable
-                  style={styles.btn2}
-                  onPress={HandleDelete(item._id)}>
-                  <Text style={{ color: "white", letterSpacing: 0.2 }}>
-                    Delete User
+                  <Text
+                    style={{
+                      color: "grey",
+                      letterSpacing: 0.2,
+                      fontSize: 12,
+                    }}>
+                    {item.email}
                   </Text>
-        </Pressable>
-              </>
-            ))}
-          </ScrollView>
-          <View
-            style={{
-              borderBottomColor: "#5DBB63",
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
-        </View>
-      
-        
-      
+                </View>
+
+                <Pressable onPress={() => HandleDelete(item.id)}>
+                  <Icon
+                    style={styles.icon}
+                    name='delete'
+                    color='#5DBB63'
+                    size={30}
+                    type='material'
+                  />
+                </Pressable>
+              </View>
+
+              <View
+                style={{
+                  borderBottomColor: "grey",
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                }}
+              />
+            </>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 }

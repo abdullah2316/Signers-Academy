@@ -12,8 +12,10 @@ import {
 function AdminMenu({ navigation, route }) {
   const [hasToken, setHasToken] = React.useState(false);
   React.useEffect(() => {
+    console.log(" token");
     async function checkKey() {
       const token = await SecureStore.getItemAsync("token");
+      console.log(token, " token");
       setHasToken(Boolean(token));
     }
     checkKey();
@@ -21,6 +23,7 @@ function AdminMenu({ navigation, route }) {
 
   async function logout() {
     try {
+      await SecureStore.deleteItemAsync("admin");
       await SecureStore.deleteItemAsync("token");
       setHasToken(false);
       console.log(`Key  removed from secure store`);
@@ -70,7 +73,6 @@ function AdminMenu({ navigation, route }) {
         </View>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-          
           <Pressable
             onPress={() => navigation.navigate("managedict")}
             style={styles.btn}>
@@ -85,7 +87,6 @@ function AdminMenu({ navigation, route }) {
               Manage Users
             </Text>
           </Pressable>
-
         </View>
       </View>
     </>

@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  Button,
+  Platform,
+} from "react-native";
 import { Icon } from "react-native-elements";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { API_BASE_URL } from "../../config";
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
 
 function PSLPlayer({ navigation, route }) {
   const video = useRef(null);
@@ -14,14 +24,13 @@ function PSLPlayer({ navigation, route }) {
   const [replay, setReplay] = useState(false);
   const [colreplay, setColreplay] = useState("white");
   const [isliked, setIsliked] = useState("");
-
+  const [whichMenu, setWhichMenu] = useState("");
   useEffect(() => {
     async function getLikedStatus() {
       let token = await SecureStore.getItemAsync("token");
       console.log(token);
 
       if (token) {
-        
         const response = await axios.get(
           `${API_BASE_URL}/favourite/isfav/${route.params.id}`,
           {
@@ -54,6 +63,18 @@ function PSLPlayer({ navigation, route }) {
         console.log("Invalid token");
       }
     }
+
+    async function checkAdmin() {
+      const token = await SecureStore.getItemAsync("admin");
+      if (Boolean(token)) {
+        const res = await SecureStore.getItemAsync("admin");
+        if (res === "admin") setWhichMenu("adminmenu");
+        else setWhichMenu("menu");
+      } else {
+        setWhichMenu("menu");
+      }
+    }
+    checkAdmin();
     getLikedStatus();
     addtorecent();
   }, []);
@@ -92,6 +113,66 @@ function PSLPlayer({ navigation, route }) {
       console.error(error);
     }
   };
+  const handleDownload = async (link) => {
+    try {
+      const filename = "temp.mp4";
+      const result = await FileSystem.downloadAsync(
+        link,
+        FileSystem.documentDirectory + filename
+      );
+
+      console.log(result);
+      save(result.uri, filename, result.headers["Content-Type"]);
+      console.log("Video downloaded successfully:", result.uri);
+    } catch (error) {
+      console.error("Failed to download video:", error);
+    }
+  };
+  const downloadFromAPI = async (link) => {
+    const filename = "air_conditioner_1609134149_91864.mp4";
+    const localhost = Platform.OS === "android" ? "10.0.2.2" : "127.0.0.1";
+    const result = await FileSystem.downloadAsync(
+      link,
+      FileSystem.documentDirectory + filename,
+      {
+        headers: {
+          MyHeader: "MyValue",
+        },
+      }
+    );
+    console.log(result.uri);
+    save(result.uri, filename, result.headers["Content-Type"]);
+  };
+  const save = async (uri, filename, mimetype) => {
+    if (!(Platform.OS === "android")) {
+      const permission =
+        await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (permission.granted) {
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.Encoding.base64,
+        });
+        await FileSystem.StorageAccessFramework.createFileAsync(
+          permission.directoryUri,
+          filename,
+          mimetype
+        )
+          .then(async (uri) => {
+            if (uri) {
+              await FileSystem.writeAsStringAsync(uri, base64, {
+                encoding: FileSystem.Encoding.base64,
+              });
+            } else {
+              console.log("URI is undefined");
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        shareAsync(uri);
+      }
+    } else {
+      shareAsync(uri);
+    }
+  };
 
   let link = route.params.path;
   let name = route.params.name;
@@ -104,7 +185,7 @@ function PSLPlayer({ navigation, route }) {
       <View style={{ alignItems: "flex-start" }}>
         <Pressable
           onPress={() => {
-            navigation.navigate("menu");
+            navigation.navigate(whichMenu);
           }}>
           <Icon
             style={styles.icon}
@@ -142,14 +223,10 @@ function PSLPlayer({ navigation, route }) {
         }}
       />
       <View style={styles.buttons}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            setReplay(!replay);
-          }}>
+        <Pressable style={styles.button} onPress={() => handleDownload(link)}>
           <Icon
             style={styles.icon}
-            name='file-download'
+            name='share'
             color={colreplay}
             size={40}
             type='material'
